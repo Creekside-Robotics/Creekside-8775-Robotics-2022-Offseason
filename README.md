@@ -1,2 +1,2 @@
-# FRC8775Robot
-This is sloth
+# FRC 8775 Robotics
+This is the home of the MechaKnights.
