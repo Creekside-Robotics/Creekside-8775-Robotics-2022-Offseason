@@ -15,12 +15,9 @@ import frc.robot.commands.ManualDrive;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunIntake;
-import frc.robot.commands.SetExtentionIntakeMode;
 import frc.robot.commands.TestArmMovement;
-import frc.robot.commands.TestAutoDrive;
 import frc.robot.subsystems.ArmComponent;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExtendedIntake;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
@@ -39,7 +36,6 @@ public class RobotContainer {
   JoystickButton intakeButton = new JoystickButton(driveStick, 2);
   JoystickButton extentionButton = new JoystickButton(driveStick, 7);
   JoystickButton calibrateArmsButton = new JoystickButton(climbStick, 7);
-  JoystickButton testKinematicsButton = new JoystickButton(driveStick, 8);
   JoystickButton testClimbCalibration = new JoystickButton(climbStick, 8);
 
   Drivetrain drivetrain = new Drivetrain();
@@ -48,8 +44,6 @@ public class RobotContainer {
   ArmComponent redArm = new ArmComponent(Constants.redArmId, MotorType.kBrushed, 1, Constants.redRevInRan, 1, 0, 1);
   ArmComponent yellowArm = new ArmComponent(Constants.yellowArmId, MotorType.kBrushed, 1, Constants.yellowRevInRan, 1, 2, 3);
   ArmComponent tiltArm = new ArmComponent(Constants.tiltId, MotorType.kBrushless, 1, Constants.tiltRevInRan, 1, 4, 5);
-  ExtendedIntake extIntake = new ExtendedIntake();
-
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -70,13 +64,12 @@ public class RobotContainer {
     redArm.setDefaultCommand(new MoveArm(redArm, climbStick, "Y"));
     yellowArm.setDefaultCommand(new MoveArm(yellowArm, climbStick, "X"));
     tiltArm.setDefaultCommand(new MoveArm(tiltArm, climbStick, "Z"));
-    extIntake.setDefaultCommand(new SetExtentionIntakeMode(extIntake, false));
+    
 
     shootTrigger.whenHeld(new RunFlywheel(shooter, 1000000, 0.7));
     intakeButton.whenHeld(new RunIntake(intake, 1000000, 0.5));
-    extentionButton.whenHeld(new SetExtentionIntakeMode(extIntake, true));
+    
     calibrateArmsButton.whenPressed(new CalibrateArm(redArm));
-    testKinematicsButton.whenHeld(new TestAutoDrive(drivetrain));
     testClimbCalibration.whenHeld(new TestArmMovement(redArm));
   }
 
