@@ -4,24 +4,22 @@
 
 package frc.robot.commands;
 
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class ManualDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Drivetrain drivetrainSubsystem;
-  private Joystick joystick;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ManualDrive(Drivetrain subsystem, Joystick joystick) {
+  public ManualDrive(Drivetrain subsystem) {
     this.drivetrainSubsystem = subsystem;
-    this.joystick = joystick;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.drivetrainSubsystem);
   }
@@ -29,13 +27,12 @@ public class ManualDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drivetrainSubsystem.setBrake(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drivetrainSubsystem.setMovement(-this.joystick.getY(), this.joystick.getX());
+    this.drivetrainSubsystem.setMovement(-RobotContainer.driveStick.getY(), RobotContainer.driveStick.getX());
   }
 
   // Called once the command ends or is interrupted.

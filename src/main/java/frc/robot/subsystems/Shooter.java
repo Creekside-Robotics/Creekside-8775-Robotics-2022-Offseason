@@ -21,7 +21,7 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setRPM(double speed){
+  public void setSpeed(double speed){
     this.flywheelMotor.set(this.multiplier * speed);
   }
 

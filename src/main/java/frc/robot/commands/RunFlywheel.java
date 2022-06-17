@@ -7,18 +7,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class RunFlywheel extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Shooter shooterSubsystem;
-  private double stopTime;
-  private double RPM;
+  private double flywheelSpeed;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public RunFlywheel(Shooter subsystem, double maxTime, double rpm) {
-    this.stopTime = System.currentTimeMillis() + maxTime;
+  public RunFlywheel(Shooter subsystem, double speed) {
     this.shooterSubsystem = subsystem;
-    this.RPM = rpm;
+    this.flywheelSpeed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.shooterSubsystem);
   }
@@ -32,7 +30,7 @@ public class RunFlywheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.shooterSubsystem.setRPM(this.RPM);
+    this.shooterSubsystem.setSpeed(this.flywheelSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -43,6 +41,6 @@ public class RunFlywheel extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return System.currentTimeMillis() > this.stopTime;
+    return false;
   }
 }
