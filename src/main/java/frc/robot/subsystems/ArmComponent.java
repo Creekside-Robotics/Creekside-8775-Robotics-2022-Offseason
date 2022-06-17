@@ -10,8 +10,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public abstract class ArmComponent extends SubsystemBase {
   /** Creates a new ArmComponent. */
-  private CANSparkMax mainMotor;
-  private double multiplier;
+  protected CANSparkMax mainMotor;
+  protected double multiplier;
 
 
   public ArmComponent(int deviceId, MotorType type, double multiplier) {
