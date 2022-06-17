@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class RunIntake extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Intake intakeSubsystem;
-  private double stopTime;
   private double intakeSpeed;
 
   /**
@@ -16,8 +15,7 @@ public class RunIntake extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public RunIntake(Intake subsystem, double maxTime, double intakeSpeed) {
-    this.stopTime = System.currentTimeMillis() + maxTime;
+  public RunIntake(Intake subsystem, double intakeSpeed) {
     this.intakeSubsystem = subsystem;
     this.intakeSpeed = intakeSpeed;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -44,6 +42,6 @@ public class RunIntake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return System.currentTimeMillis() > this.stopTime;
+    return false;
   }
 }
