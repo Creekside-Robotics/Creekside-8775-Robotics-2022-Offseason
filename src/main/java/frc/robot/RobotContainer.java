@@ -29,7 +29,7 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  Joystick driveStick = new Joystick(0);
+  public static Joystick driveStick = new Joystick(0);
   Joystick climbStick = new Joystick(1);
 
   JoystickButton shootTrigger = new JoystickButton(driveStick, 1);
@@ -58,17 +58,16 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    drivetrain.setDefaultCommand(new ManualDrive(drivetrain, driveStick));
+    drivetrain.setDefaultCommand(new ManualDrive(drivetrain));
     intake.setDefaultCommand(new RunIntake(intake, 1000000, 0));
-    shooter.setDefaultCommand(new RunFlywheel(shooter, 1000000, 0));
+    shooter.setDefaultCommand(new RunFlywheel(shooter, 0));
     redArm.setDefaultCommand(new MoveArm(redArm, climbStick, "Y"));
     yellowArm.setDefaultCommand(new MoveArm(yellowArm, climbStick, "X"));
     tiltArm.setDefaultCommand(new MoveArm(tiltArm, climbStick, "Z"));
     
 
-    shootTrigger.whenHeld(new RunFlywheel(shooter, 1000000, 0.7));
+    shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
     intakeButton.whenHeld(new RunIntake(intake, 1000000, 0.5));
-    
     calibrateArmsButton.whenPressed(new CalibrateArm(redArm));
     testClimbCalibration.whenHeld(new TestArmMovement(redArm));
   }
