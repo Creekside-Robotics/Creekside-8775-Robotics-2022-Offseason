@@ -59,7 +59,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     drivetrain.setDefaultCommand(new ManualDrive(drivetrain));
-    intake.setDefaultCommand(new RunIntake(intake, 1000000, 0));
+    intake.setDefaultCommand(new RunIntake(intake, 0));
     shooter.setDefaultCommand(new RunFlywheel(shooter, 0));
     redArm.setDefaultCommand(new MoveArm(redArm, climbStick, "Y"));
     yellowArm.setDefaultCommand(new MoveArm(yellowArm, climbStick, "X"));
@@ -67,7 +67,7 @@ public class RobotContainer {
     
 
     shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
-    intakeButton.whenHeld(new RunIntake(intake, 1000000, 0.5));
+    intakeButton.whenHeld(new RunIntake(intake, 0.5));
     calibrateArmsButton.whenPressed(new CalibrateArm(redArm));
     testClimbCalibration.whenHeld(new TestArmMovement(redArm));
   }
