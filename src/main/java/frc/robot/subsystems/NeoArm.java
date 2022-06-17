@@ -28,7 +28,7 @@ public class NeoArm extends ArmComponent {
   }
 
   @Override
-  double getPostion() {
-    return 0;
+  double getPosition() {
+    return this.encoder.getPosition();
   }
 }

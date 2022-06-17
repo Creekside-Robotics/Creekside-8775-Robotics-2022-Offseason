@@ -29,7 +29,7 @@ public class SIMArm extends ArmComponent {
   }
 
   @Override
-  public double getPostion() {
+  public double getPosition() {
     return this.encoder.getDistance();
   }
 }

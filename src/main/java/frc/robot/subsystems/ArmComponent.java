@@ -30,5 +30,5 @@ public abstract class ArmComponent extends SubsystemBase {
 
   abstract void resetPosition();
 
-  abstract double getPostion();
+  abstract double getPosition();
 }
