@@ -21,7 +21,6 @@ public class ArmComponent extends SubsystemBase {
   //Sensor input
   public double position;
 
-
   public ArmComponent(int deviceId, MotorType type, double multiplier, double revolutionsInRange, double encoderMultiplier, int port1, int port2) {
     this.mainMotor = new CANSparkMax(deviceId, type);
     this.multiplier = multiplier;
