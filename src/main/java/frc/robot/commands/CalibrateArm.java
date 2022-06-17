@@ -21,6 +21,6 @@ public class CalibrateArm extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.arm.reset();
+    this.arm.resetPosition();
   }
 }

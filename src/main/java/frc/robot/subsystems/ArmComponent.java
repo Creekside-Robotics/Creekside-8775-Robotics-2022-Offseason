@@ -28,7 +28,7 @@ public abstract class ArmComponent extends SubsystemBase {
     this.mainMotor.set(speed * this.multiplier);
   }
 
-  abstract void resetPosition();
+  public abstract void resetPosition();
 
-  abstract double getPosition();
+  public abstract double getPosition();
 }

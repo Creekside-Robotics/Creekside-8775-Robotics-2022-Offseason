@@ -23,12 +23,12 @@ public class NeoArm extends ArmComponent {
   }
 
   @Override
-  void resetPosition() {
+  public void resetPosition() {
     this.encoder.setPosition(0);
   }
 
   @Override
-  double getPosition() {
+  public double getPosition() {
     return this.encoder.getPosition();
   }
 }
