@@ -14,24 +14,21 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    //CAN IDs
     public static int drivetrain1 = 1;
     public static int drivetrain2 = 2;
     public static int drivetrain3 = 3;
     public static int drivetrain4 = 4;
-    public static int pigeonId = 0;
-
     public static int flywheel = 5;
-    public static int revNeoKv = 300;
-
     public static int frontConveyer = 8;
     public static int backConveyer = 9;
-
     public static int redArmId = 6;
-    public static double redRevInRan = 3.1666;
-    public static int yellowArmId = 7;
     public static double yellowRevInRan = 5;
+    public static int yellowArmId = 7;
+
+    // Physical Encoder Constants
+    public static double redRevInRan = 3.1666;
     public static int tiltId = 10;
     public static double tiltRevInRan = 240;
-
     public static double tickPerRev = 1500;
 }

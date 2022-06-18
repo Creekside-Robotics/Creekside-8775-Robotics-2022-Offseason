@@ -3,17 +3,12 @@ package frc.robot.commands;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
+/** Runs flywheel at set speed */
 public class RunFlywheel extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Shooter shooterSubsystem;
   private double flywheelSpeed;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
   public RunFlywheel(Shooter subsystem, double speed) {
     this.shooterSubsystem = subsystem;
     this.flywheelSpeed = speed;

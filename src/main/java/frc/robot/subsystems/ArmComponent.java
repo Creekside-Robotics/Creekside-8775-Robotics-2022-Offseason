@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+// Base class of arm subsystem
 public abstract class ArmComponent extends SubsystemBase {
   /** Creates a new ArmComponent. */
   protected CANSparkMax mainMotor;

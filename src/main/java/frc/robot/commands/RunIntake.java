@@ -4,17 +4,12 @@ package frc.robot.commands;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
+/** Runs intake at certain speed */
 public class RunIntake extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Intake intakeSubsystem;
   private double intakeSpeed;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
   public RunIntake(Intake subsystem, double intakeSpeed) {
     this.intakeSubsystem = subsystem;
     this.intakeSpeed = intakeSpeed;

@@ -10,6 +10,7 @@ import frc.robot.subsystems.ArmComponent;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+// Test rouitine for arm
 public class TestArmMovement extends SequentialCommandGroup {
   /** Creates a new TestArmMovement. */
   private ArmComponent arm;

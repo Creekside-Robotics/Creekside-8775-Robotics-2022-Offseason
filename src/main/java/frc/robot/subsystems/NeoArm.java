@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+// Class for arm using Neo motor and through built in encoder
 public class NeoArm extends ArmComponent {
   /** Creates a new NeoArm. */
   private RelativeEncoder encoder;

@@ -8,6 +8,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.ArmComponent;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+// Used to move arms manually
 public class MoveArm extends CommandBase {
   /** Creates a new MoveArm. */
   private ArmComponent armSubsystem;

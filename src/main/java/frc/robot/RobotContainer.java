@@ -25,12 +25,16 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+
+  // Joysticks
   public static Joystick driveStick = new Joystick(0);
   public static Joystick climbStick = new Joystick(1);
 
+  // Buttons for the drive stick
   JoystickButton shootTrigger = new JoystickButton(driveStick, 1);
   JoystickButton intakeButton = new JoystickButton(driveStick, 2);
 
+  // Climb Joystick Buttons
   JoystickButton calibrateRed = new JoystickButton(climbStick, 7);
   JoystickButton testRed = new JoystickButton(climbStick, 8);
   JoystickButton calibrateYellow = new JoystickButton(climbStick, 9);
@@ -39,6 +43,7 @@ public class RobotContainer {
   JoystickButton testTilt = new JoystickButton(climbStick, 12);
   JoystickButton activateArmMovement = new JoystickButton(climbStick, 0);
 
+  // The robot's subsystems
   Drivetrain drivetrain = new Drivetrain();
   Intake intake = new Intake(-1);
   Shooter shooter = new Shooter(1);
@@ -59,6 +64,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    //Default commands for the different subsystems
     drivetrain.setDefaultCommand(new ManualDrive(drivetrain));
     intake.setDefaultCommand(new RunIntake(intake, 0));
     shooter.setDefaultCommand(new RunFlywheel(shooter, 0));
@@ -66,6 +72,7 @@ public class RobotContainer {
     yellowArm.setDefaultCommand(new MoveArm(yellowArm, "0"));
     tiltArm.setDefaultCommand(new MoveArm(tiltArm, "0"));
 
+    //Button bindings for the different subsystems
     shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
     intakeButton.whenHeld(new RunIntake(intake, 0.5));
     activateArmMovement.whenHeld(new ParallelCommandGroup(
@@ -74,6 +81,7 @@ public class RobotContainer {
       new MoveArm(tiltArm, "Z")
     ));
 
+    //Button bindings for arm calibration and testing
     calibrateRed.whenPressed(new CalibrateArm(redArm));
     testRed.whenHeld(new TestArmMovement(redArm));
     calibrateYellow.whenPressed(new CalibrateArm(yellowArm));
@@ -88,6 +96,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    // Autonomous command is yet to be developed
     return null;
   }
 }

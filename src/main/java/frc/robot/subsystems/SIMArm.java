@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.Constants;
 
+// Class for arm using SIM motor and through bore encoder
 public class SIMArm extends ArmComponent {
   /** Creates a new SIMArm. */
   private Encoder encoder;

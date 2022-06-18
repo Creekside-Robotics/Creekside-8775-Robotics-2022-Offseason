@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+// Drivetrain, odometry, and drive commands will be added soon.
 public class Drivetrain extends SubsystemBase {
   //Robot objects
   private final WPI_VictorSPX myVictor1;

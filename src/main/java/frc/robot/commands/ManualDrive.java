@@ -8,16 +8,12 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
+/** Default Joystick Controlled drive command */
 public class ManualDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Drivetrain drivetrainSubsystem;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
+  
   public ManualDrive(Drivetrain subsystem) {
     this.drivetrainSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
