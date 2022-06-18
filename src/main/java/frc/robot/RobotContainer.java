@@ -56,9 +56,9 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(new ManualDrive(drivetrain));
     intake.setDefaultCommand(new RunIntake(intake, 0));
     shooter.setDefaultCommand(new RunFlywheel(shooter, 0));
-    redArm.setDefaultCommand(new MoveArm(redArm, climbStick, "Y"));
-    yellowArm.setDefaultCommand(new MoveArm(yellowArm, climbStick, "X"));
-    tiltArm.setDefaultCommand(new MoveArm(tiltArm, climbStick, "Z"));
+    redArm.setDefaultCommand(new MoveArm(redArm, "Y"));
+    yellowArm.setDefaultCommand(new MoveArm(yellowArm, "X"));
+    tiltArm.setDefaultCommand(new MoveArm(tiltArm, "Z"));
 
     shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
     intakeButton.whenHeld(new RunIntake(intake, 0.5));
