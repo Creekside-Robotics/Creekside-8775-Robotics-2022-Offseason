@@ -31,12 +31,7 @@ public final class Constants {
     public static int yellowArmId = 7;
     public static double yellowRevInRan = 5;
     public static int tiltId = 10;
-    public static double tiltRevInRan = 12;
+    public static double tiltRevInRan = 240;
 
-    public static int extenderLeftForwardChannel = 0;
-    public static int extenderLeftBackwardChannel = 1;
-    public static int extenderRightForwardChannel = 2;
-    public static int extenderRightBackwardChannel = 3;
-    public static double tickPerRev = 1200;
-    
+    public static double tickPerRev = 1500;
 }

@@ -19,6 +19,8 @@ import frc.robot.commands.TestArmMovement;
 import frc.robot.subsystems.ArmComponent;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.NeoArm;
+import frc.robot.subsystems.SIMArm;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -41,9 +43,9 @@ public class RobotContainer {
   Drivetrain drivetrain = new Drivetrain();
   Intake intake = new Intake(-1);
   Shooter shooter = new Shooter(1);
-  ArmComponent redArm = new ArmComponent(Constants.redArmId, MotorType.kBrushed, 1, Constants.redRevInRan, 1, 0, 1);
-  ArmComponent yellowArm = new ArmComponent(Constants.yellowArmId, MotorType.kBrushed, 1, Constants.yellowRevInRan, 1, 2, 3);
-  ArmComponent tiltArm = new ArmComponent(Constants.tiltId, MotorType.kBrushless, 1, Constants.tiltRevInRan, 1, 4, 5);
+  ArmComponent redArm = new SIMArm(Constants.redArmId, 1, Constants.redRevInRan, 1, 0);
+  ArmComponent yellowArm = new SIMArm(Constants.yellowArmId, 1, Constants.yellowRevInRan, 1, 2);
+  ArmComponent tiltArm = new NeoArm(Constants.tiltId, 1, Constants.tiltRevInRan);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -64,7 +66,6 @@ public class RobotContainer {
     redArm.setDefaultCommand(new MoveArm(redArm, climbStick, "Y"));
     yellowArm.setDefaultCommand(new MoveArm(yellowArm, climbStick, "X"));
     tiltArm.setDefaultCommand(new MoveArm(tiltArm, climbStick, "Z"));
-    
 
     shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
     intakeButton.whenHeld(new RunIntake(intake, 0.5));

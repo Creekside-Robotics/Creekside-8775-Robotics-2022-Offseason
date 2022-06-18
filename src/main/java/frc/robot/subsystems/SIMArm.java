@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
+import frc.robot.Constants;
 
 public class SIMArm extends ArmComponent {
   /** Creates a new SIMArm. */
@@ -14,7 +15,7 @@ public class SIMArm extends ArmComponent {
   public SIMArm(int devID, double multiplier, double encoderMultiplier, int encoderPort1, int encoderPort2) {
     super(devID, MotorType.kBrushed, multiplier);
     this.encoder = new Encoder(encoderPort1, encoderPort2);
-    this.encoder.setDistancePerPulse(encoderMultiplier);
+    this.encoder.setDistancePerPulse(1 / (encoderMultiplier * Constants.tickPerRev));
   }
 
   @Override

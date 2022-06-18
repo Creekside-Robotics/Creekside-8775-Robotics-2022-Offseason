@@ -14,7 +14,7 @@ public class NeoArm extends ArmComponent {
   public NeoArm(int devId, double multiplier, double encoderMultiplier) {
     super(devId, MotorType.kBrushless, multiplier);
     this.encoder = this.mainMotor.getEncoder();
-    this.encoder.setPositionConversionFactor(encoderMultiplier);
+    this.encoder.setPositionConversionFactor(1 / encoderMultiplier);
   }
 
   @Override
