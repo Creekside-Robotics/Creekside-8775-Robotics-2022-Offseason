@@ -25,7 +25,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static Joystick driveStick = new Joystick(0);
-  Joystick climbStick = new Joystick(1);
+  public static Joystick climbStick = new Joystick(1);
 
   JoystickButton shootTrigger = new JoystickButton(driveStick, 1);
   JoystickButton intakeButton = new JoystickButton(driveStick, 2);
