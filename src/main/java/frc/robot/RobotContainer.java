@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.CalibrateArm;
 import frc.robot.commands.ManualDrive;
@@ -29,12 +30,14 @@ public class RobotContainer {
 
   JoystickButton shootTrigger = new JoystickButton(driveStick, 1);
   JoystickButton intakeButton = new JoystickButton(driveStick, 2);
+
   JoystickButton calibrateRed = new JoystickButton(climbStick, 7);
   JoystickButton testRed = new JoystickButton(climbStick, 8);
   JoystickButton calibrateYellow = new JoystickButton(climbStick, 9);
   JoystickButton testYellow = new JoystickButton(climbStick, 10);
   JoystickButton calibrateTilt = new JoystickButton(climbStick, 11);
   JoystickButton testTilt = new JoystickButton(climbStick, 12);
+  JoystickButton activateArmMovement = new JoystickButton(climbStick, 0);
 
   Drivetrain drivetrain = new Drivetrain();
   Intake intake = new Intake(-1);
@@ -59,13 +62,18 @@ public class RobotContainer {
     drivetrain.setDefaultCommand(new ManualDrive(drivetrain));
     intake.setDefaultCommand(new RunIntake(intake, 0));
     shooter.setDefaultCommand(new RunFlywheel(shooter, 0));
-    redArm.setDefaultCommand(new MoveArm(redArm, "Y"));
-    yellowArm.setDefaultCommand(new MoveArm(yellowArm, "X"));
-    tiltArm.setDefaultCommand(new MoveArm(tiltArm, "Z"));
+    redArm.setDefaultCommand(new MoveArm(redArm, "0"));
+    yellowArm.setDefaultCommand(new MoveArm(yellowArm, "0"));
+    tiltArm.setDefaultCommand(new MoveArm(tiltArm, "0"));
 
     shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
     intakeButton.whenHeld(new RunIntake(intake, 0.5));
-    
+    activateArmMovement.whenHeld(new ParallelCommandGroup(
+      new MoveArm(redArm, "Y"),
+      new MoveArm(yellowArm, "X"),
+      new MoveArm(tiltArm, "Z")
+    ));
+
     calibrateRed.whenPressed(new CalibrateArm(redArm));
     testRed.whenHeld(new TestArmMovement(redArm));
     calibrateYellow.whenPressed(new CalibrateArm(yellowArm));

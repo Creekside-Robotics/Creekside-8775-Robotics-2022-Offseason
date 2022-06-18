@@ -38,8 +38,10 @@ public class MoveArm extends CommandBase {
       case "Z":
         armSubsystem.setSpeed(RobotContainer.driveStick.getZ());
         break;
+      default:
+        armSubsystem.setSpeed(0);
+        break;
     }
-
   }
 
   // Called once the command ends or is interrupted.
