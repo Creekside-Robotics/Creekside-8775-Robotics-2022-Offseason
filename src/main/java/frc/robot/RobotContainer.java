@@ -29,9 +29,12 @@ public class RobotContainer {
 
   JoystickButton shootTrigger = new JoystickButton(driveStick, 1);
   JoystickButton intakeButton = new JoystickButton(driveStick, 2);
-  JoystickButton extentionButton = new JoystickButton(driveStick, 7);
-  JoystickButton calibrateArmsButton = new JoystickButton(climbStick, 7);
-  JoystickButton testClimbCalibration = new JoystickButton(climbStick, 8);
+  JoystickButton calibrateRed = new JoystickButton(climbStick, 7);
+  JoystickButton testRed = new JoystickButton(climbStick, 8);
+  JoystickButton calibrateYellow = new JoystickButton(climbStick, 9);
+  JoystickButton testYellow = new JoystickButton(climbStick, 10);
+  JoystickButton calibrateTilt = new JoystickButton(climbStick, 11);
+  JoystickButton testTilt = new JoystickButton(climbStick, 12);
 
   Drivetrain drivetrain = new Drivetrain();
   Intake intake = new Intake(-1);
@@ -62,8 +65,13 @@ public class RobotContainer {
 
     shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
     intakeButton.whenHeld(new RunIntake(intake, 0.5));
-    calibrateArmsButton.whenPressed(new CalibrateArm(redArm));
-    testClimbCalibration.whenHeld(new TestArmMovement(redArm));
+    
+    calibrateRed.whenPressed(new CalibrateArm(redArm));
+    testRed.whenHeld(new TestArmMovement(redArm));
+    calibrateYellow.whenPressed(new CalibrateArm(yellowArm));
+    testYellow.whenHeld(new TestArmMovement(yellowArm));
+    calibrateTilt.whenPressed(new CalibrateArm(tiltArm));
+    testTilt.whenHeld(new TestArmMovement(tiltArm));
   }
 
   /**
