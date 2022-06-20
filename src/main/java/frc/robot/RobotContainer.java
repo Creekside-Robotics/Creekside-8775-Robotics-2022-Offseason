@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.CalibrateArm;
 import frc.robot.commands.ManualDrive;
@@ -88,6 +90,14 @@ public class RobotContainer {
     testYellow.whenHeld(new TestArmMovement(yellowArm));
     calibrateTilt.whenPressed(new CalibrateArm(tiltArm));
     testTilt.whenHeld(new TestArmMovement(tiltArm));
+    /*
+    testTilt.whenHeld(new SequentialCommandGroup(
+      new ParallelDeadlineGroup(),
+      new ParallelDeadlineGroup(),
+      new ParallelDeadlineGroup()
+    ));
+    */
+
   }
 
   /**
