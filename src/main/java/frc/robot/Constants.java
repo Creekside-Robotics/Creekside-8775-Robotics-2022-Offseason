@@ -31,4 +31,10 @@ public final class Constants {
     public static int tiltId = 10;
     public static double tiltRevInRan = 240;
     public static double tickPerRev = 1500;
+
+    // DIO Constants
+    public static int leftEncoder1 = 4;
+    public static int leftEncoder2 = 5;
+    public static int rightEncoder1 = 6;
+    public static int rightEncoder2 = 7;
 }

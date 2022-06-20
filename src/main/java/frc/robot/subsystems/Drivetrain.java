@@ -4,7 +4,9 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +22,12 @@ public class Drivetrain extends SubsystemBase {
   private final MotorControllerGroup groupright;
   private DifferentialDrive robotDrive;
 
+  // Automation objects
+  private Encoder leftEncoder;
+  private Encoder rightEncoder;
+  private Pigeon2 pigeon;
+
+
   public Drivetrain() {
     this.myVictor1 = new WPI_VictorSPX(Constants.drivetrain1);
     this.myVictor2 = new WPI_VictorSPX(Constants.drivetrain2);
@@ -29,6 +37,10 @@ public class Drivetrain extends SubsystemBase {
     this.groupright = new MotorControllerGroup(myVictor3, myVictor4);
     this.groupright.setInverted(true);
     this.robotDrive = new DifferentialDrive(groupright, groupleft);
+
+    this.leftEncoder = new Encoder(Constants.leftEncoder1, Constants.leftEncoder2, false);
+    this.rightEncoder = new Encoder(Constants.rightEncoder1, Constants.rightEncoder2, false);
+    this.pigeon = new Pigeon2(0);
   }
 
   @Override
