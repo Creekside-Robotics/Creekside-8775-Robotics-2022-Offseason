@@ -37,4 +37,7 @@ public final class Constants {
     public static int leftEncoder2 = 5;
     public static int rightEncoder1 = 6;
     public static int rightEncoder2 = 7;
+
+    //Drivetrain Physical Constants
+    public static double drivetrainDistancePerPulse = 0.0024;
 }

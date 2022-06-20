@@ -6,6 +6,11 @@ import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -26,6 +31,7 @@ public class Drivetrain extends SubsystemBase {
   private Encoder leftEncoder;
   private Encoder rightEncoder;
   private Pigeon2 pigeon;
+  private DifferentialDriveOdometry odometry;
 
 
   public Drivetrain() {
@@ -39,19 +45,51 @@ public class Drivetrain extends SubsystemBase {
     this.robotDrive = new DifferentialDrive(groupright, groupleft);
 
     this.leftEncoder = new Encoder(Constants.leftEncoder1, Constants.leftEncoder2, false);
+    this.leftEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
+
     this.rightEncoder = new Encoder(Constants.rightEncoder1, Constants.rightEncoder2, false);
+    this.rightEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
+
     this.pigeon = new Pigeon2(0);
+
+    this.odometry = new DifferentialDriveOdometry(new Rotation2d(0));
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    odometry.update(getRotation(), this.leftEncoder.getDistance(), this.rightEncoder.getDistance());
   }
 
   public void setMovement(double speed, double turnRate){
     this.robotDrive.arcadeDrive(speed, -turnRate);
   }
 
+  public Pose2d getPose() {
+    return this.odometry.getPoseMeters();
+  }
+
+  public Rotation2d getRotation(){
+    return new Rotation2d(Units.degreesToRadians(-this.pigeon.getYaw()));
+  }
+
+  public void tankDriveVolts(double leftVolts, double rightVolts){
+    this.groupleft.setVoltage(leftVolts);
+    this.groupright.setVoltage(rightVolts);
+    this.robotDrive.feed();
+  }
+
+  public DifferentialDriveWheelSpeeds wheelSpeeds(){
+    return new DifferentialDriveWheelSpeeds(this.leftEncoder.getRate(), this.rightEncoder.getRate());
+  }
+
+  public void resetPose(){
+    this.leftEncoder.reset();
+    this.rightEncoder.reset();
+    this.pigeon.setYaw(0);
+    this.odometry.resetPosition(new Pose2d(), getRotation());
+  }
+  
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
