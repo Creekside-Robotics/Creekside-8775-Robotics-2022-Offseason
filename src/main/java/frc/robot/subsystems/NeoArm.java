@@ -12,9 +12,10 @@ public class NeoArm extends ArmComponent {
   /** Creates a new NeoArm. */
   private RelativeEncoder encoder;
   
-  public NeoArm(int devId, double multiplier, double encoderMultiplier) {
-    super(devId, MotorType.kBrushless, multiplier);
+  public NeoArm(int devId, boolean reverse, boolean reverseEncoder, double encoderMultiplier) {
+    super(devId, MotorType.kBrushless, reverse);
     this.encoder = this.mainMotor.getEncoder();
+    this.encoder.setInverted(reverseEncoder);
     this.encoder.setPositionConversionFactor(1 / encoderMultiplier);
   }
 

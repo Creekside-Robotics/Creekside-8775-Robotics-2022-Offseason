@@ -12,12 +12,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public abstract class ArmComponent extends SubsystemBase {
   /** Creates a new ArmComponent. */
   protected CANSparkMax mainMotor;
-  protected double multiplier;
 
 
-  public ArmComponent(int deviceId, MotorType type, double multiplier) {
+  public ArmComponent(int deviceId, MotorType type, boolean reverse) {
     this.mainMotor = new CANSparkMax(deviceId, type);
-    this.multiplier = multiplier;
+    this.mainMotor.setInverted(reverse);
   }
 
   @Override
@@ -26,7 +25,7 @@ public abstract class ArmComponent extends SubsystemBase {
   }
 
   public void setSpeed(double speed){
-    this.mainMotor.set(speed * this.multiplier);
+    this.mainMotor.set(speed);
   }
 
   public abstract void resetPosition();

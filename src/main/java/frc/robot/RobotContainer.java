@@ -47,9 +47,9 @@ public class RobotContainer {
   Drivetrain drivetrain = new Drivetrain();
   Intake intake = new Intake(-1);
   Shooter shooter = new Shooter(1);
-  ArmComponent redArm = new SIMArm(Constants.redArmId, 1, Constants.redRevInRan, 1, 0);
-  ArmComponent yellowArm = new SIMArm(Constants.yellowArmId, 1, Constants.yellowRevInRan, 1, 2);
-  ArmComponent tiltArm = new NeoArm(Constants.tiltId, 1, Constants.tiltRevInRan);
+  ArmComponent redArm = new SIMArm(Constants.redArmId, false, false, Constants.redRevInRan, 1, 0);
+  ArmComponent yellowArm = new SIMArm(Constants.yellowArmId, false, false, Constants.yellowRevInRan, 1, 2);
+  ArmComponent tiltArm = new NeoArm(Constants.tiltId, false, false, Constants.tiltRevInRan);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
