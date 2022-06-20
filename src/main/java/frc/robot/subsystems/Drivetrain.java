@@ -58,7 +58,7 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    odometry.update(getRotation(), this.leftEncoder.getDistance(), this.rightEncoder.getDistance());
+    this.odometry.update(getRotation(), this.leftEncoder.getDistance(), this.rightEncoder.getDistance());
   }
 
   public void setMovement(double speed, double turnRate){
@@ -89,7 +89,7 @@ public class Drivetrain extends SubsystemBase {
     this.pigeon.setYaw(0);
     this.odometry.resetPosition(new Pose2d(), getRotation());
   }
-  
+
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
