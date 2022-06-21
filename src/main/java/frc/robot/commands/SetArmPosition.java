@@ -13,7 +13,7 @@ public class SetArmPosition extends CommandBase {
   private ArmComponent arm;
   private boolean hold;
   private double endPosition;
-  final private double speed = 0.5;
+  final private double speed = 0.8;
   final private double tolerance = 0.03;
 
   public SetArmPosition(ArmComponent arm, double position, boolean hold) {
@@ -36,10 +36,14 @@ public class SetArmPosition extends CommandBase {
     double difference = this.endPosition - this.arm.getPosition();
     if (Math.abs(difference) > tolerance) {
       this.arm.setSpeed(0);
-    } else if (difference > 0) {
+    } else if (difference > 0.2) {
       this.arm.setSpeed(this.speed);
-    } else {
+    } else if (difference < -0.2) {
       this.arm.setSpeed(-this.speed);
+    }else if (difference > 0) {
+      this.arm.setSpeed(this.speed / 2);
+    } else if (difference < 0) {
+      this.arm.setSpeed(-this.speed / 2);
     }
   }
 
