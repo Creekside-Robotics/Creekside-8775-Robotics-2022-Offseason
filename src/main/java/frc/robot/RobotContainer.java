@@ -39,11 +39,11 @@ public class RobotContainer {
 
   // Climb Joystick Buttons
   JoystickButton calibrateRed = new JoystickButton(climbStick, 7);
-  JoystickButton testRed = new JoystickButton(climbStick, 8);
+  JoystickButton getIntoPosition = new JoystickButton(climbStick, 8);
   JoystickButton calibrateYellow = new JoystickButton(climbStick, 9);
-  JoystickButton testYellow = new JoystickButton(climbStick, 10);
+  JoystickButton twoBarClimb = new JoystickButton(climbStick, 10);
   JoystickButton calibrateTilt = new JoystickButton(climbStick, 11);
-  JoystickButton testTilt = new JoystickButton(climbStick, 12);
+  JoystickButton fourBarClimb = new JoystickButton(climbStick, 12);
   JoystickButton activateArmMovement = new JoystickButton(climbStick, 1);
 
   // The robot's subsystems
@@ -86,11 +86,11 @@ public class RobotContainer {
 
     //Button bindings for arm calibration and testing
     calibrateRed.whenPressed(new CalibrateArm(redArm));
-    testRed.whenHeld(new SetArmPosition(redArm, 1, false));
+    getIntoPosition.whenHeld(new SetArmPosition(redArm, 1, false));
     calibrateYellow.whenPressed(new CalibrateArm(yellowArm));
-    testYellow.whenHeld(new SetArmPosition(redArm, 0, true));
+    twoBarClimb.whenHeld(new SetArmPosition(redArm, 0, true));
     calibrateTilt.whenPressed(new CalibrateArm(tiltArm));
-    testYellow.whenHeld(new SequentialCommandGroup(
+    fourBarClimb.whenHeld(new SequentialCommandGroup(
       new ParallelCommandGroup(
         new SetArmPosition(redArm, 0, false),
         new SetArmPosition(yellowArm, 1, false),
