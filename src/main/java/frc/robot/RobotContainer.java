@@ -16,6 +16,7 @@ import frc.robot.commands.ManualDrive;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunIntake;
+import frc.robot.commands.SetArmPosition;
 import frc.robot.commands.TestArmMovement;
 import frc.robot.subsystems.*;
 
@@ -43,15 +44,15 @@ public class RobotContainer {
   JoystickButton testYellow = new JoystickButton(climbStick, 10);
   JoystickButton calibrateTilt = new JoystickButton(climbStick, 11);
   JoystickButton testTilt = new JoystickButton(climbStick, 12);
-  JoystickButton activateArmMovement = new JoystickButton(climbStick, 0);
+  JoystickButton activateArmMovement = new JoystickButton(climbStick, 1);
 
   // The robot's subsystems
   Drivetrain drivetrain = new Drivetrain();
   Intake intake = new Intake(-1);
   Shooter shooter = new Shooter(1);
-  ArmComponent redArm = new SIMArm(Constants.redArmId, false, false, Constants.redRevInRan, 1, 0);
-  ArmComponent yellowArm = new SIMArm(Constants.yellowArmId, false, false, Constants.yellowRevInRan, 1, 2);
-  ArmComponent tiltArm = new NeoArm(Constants.tiltId, false, false, Constants.tiltRevInRan);
+  ArmComponent redArm = new SIMArm(Constants.redArmId, false, true, Constants.redRevInRan, 1, 0, "R");
+  ArmComponent yellowArm = new SIMArm(Constants.yellowArmId, false, false, Constants.yellowRevInRan, 2, 3, "Y");
+  ArmComponent tiltArm = new NeoArm(Constants.tiltId, true, Constants.tiltRevInRan, "T");
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -85,18 +86,52 @@ public class RobotContainer {
 
     //Button bindings for arm calibration and testing
     calibrateRed.whenPressed(new CalibrateArm(redArm));
-    testRed.whenHeld(new TestArmMovement(redArm));
+    testRed.whenHeld(new SetArmPosition(redArm, 1, false));
     calibrateYellow.whenPressed(new CalibrateArm(yellowArm));
-    testYellow.whenHeld(new TestArmMovement(yellowArm));
+    testYellow.whenHeld(new SetArmPosition(redArm, 0, true));
     calibrateTilt.whenPressed(new CalibrateArm(tiltArm));
-    testTilt.whenHeld(new TestArmMovement(tiltArm));
-    /*
-    testTilt.whenHeld(new SequentialCommandGroup(
-      new ParallelDeadlineGroup(),
-      new ParallelDeadlineGroup(),
-      new ParallelDeadlineGroup()
+    testYellow.whenHeld(new SequentialCommandGroup(
+      new ParallelCommandGroup(
+        new SetArmPosition(redArm, 0, false),
+        new SetArmPosition(yellowArm, 1, false),
+        new SetArmPosition(tiltArm, 0, false)
+      ),
+      new ParallelDeadlineGroup(
+        new SetArmPosition(tiltArm, 0.35, false),
+        new SetArmPosition(redArm, 0, true),
+        new SetArmPosition(yellowArm, 1, true)
+      ),
+      new ParallelCommandGroup(
+        new SetArmPosition(yellowArm, 0, false),
+        new SetArmPosition(tiltArm, 0.9, false),
+        new SetArmPosition(redArm, 0, false)
+      ),
+      new ParallelDeadlineGroup(
+        new SetArmPosition(redArm, 0.7, false),
+        new SetArmPosition(yellowArm, 0, true),
+        new SetArmPosition(tiltArm, 0.9, true) 
+      ),
+      new ParallelDeadlineGroup(
+        new SetArmPosition(tiltArm, 0.5, false),
+        new SetArmPosition(redArm, 0.8, true),
+        new SetArmPosition(yellowArm, 0, true)
+      ),
+      new ParallelCommandGroup(
+        new SetArmPosition(tiltArm, 0.5, false),
+        new SetArmPosition(redArm, 0, false),
+        new SetArmPosition(yellowArm, 1, false)
+      ),
+      new ParallelDeadlineGroup(
+        new SetArmPosition(tiltArm, 0.1, false),
+        new SetArmPosition(redArm, 0, true),
+        new SetArmPosition(yellowArm, 1, true)
+      ),
+      new ParallelCommandGroup(
+        new SetArmPosition(tiltArm, 0.1, false),
+        new SetArmPosition(redArm, 0, false),
+        new SetArmPosition(yellowArm, 0, false)
+      )
     ));
-    */
 
   }
 

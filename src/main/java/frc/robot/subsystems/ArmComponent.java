@@ -4,7 +4,9 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -12,9 +14,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public abstract class ArmComponent extends SubsystemBase {
   /** Creates a new ArmComponent. */
   protected CANSparkMax mainMotor;
+  protected String key;
 
 
-  public ArmComponent(int deviceId, MotorType type, boolean reverse) {
+  public ArmComponent(int deviceId, MotorType type, boolean reverse, String key) {
     this.mainMotor = new CANSparkMax(deviceId, type);
     this.mainMotor.setInverted(reverse);
   }
@@ -22,6 +25,7 @@ public abstract class ArmComponent extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber(key, getPosition());
   }
 
   public void setSpeed(double speed){

@@ -24,14 +24,14 @@ public final class Constants {
     public static int frontConveyer = 8;
     public static int backConveyer = 9;
     public static int redArmId = 6;
-    public static double yellowRevInRan = 5;
     public static int yellowArmId = 7;
 
     // Physical Encoder Constants
     public static double redRevInRan = 3.1666;
     public static int tiltId = 10;
-    public static double tiltRevInRan = 240;
+    public static double tiltRevInRan = 220;
     public static double tickPerRev = 1500;
+    public static double yellowRevInRan = 5.5;
 
     // DIO Constants
     public static int leftEncoder1 = 4;

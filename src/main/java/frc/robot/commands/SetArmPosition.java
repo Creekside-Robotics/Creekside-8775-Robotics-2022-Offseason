@@ -34,16 +34,12 @@ public class SetArmPosition extends CommandBase {
   @Override
   public void execute() {
     double difference = this.endPosition - this.arm.getPosition();
-    if (Math.abs(difference) > tolerance) {
+    if (Math.abs(difference) < tolerance) {
       this.arm.setSpeed(0);
-    } else if (difference > 0.2) {
-      this.arm.setSpeed(this.speed);
-    } else if (difference < -0.2) {
-      this.arm.setSpeed(-this.speed);
     }else if (difference > 0) {
-      this.arm.setSpeed(this.speed / 2);
+      this.arm.setSpeed(this.speed);
     } else if (difference < 0) {
-      this.arm.setSpeed(-this.speed / 2);
+      this.arm.setSpeed(-this.speed);
     }
   }
 

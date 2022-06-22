@@ -13,8 +13,8 @@ public class SIMArm extends ArmComponent {
   /** Creates a new SIMArm. */
   private Encoder encoder;
 
-  public SIMArm(int devID, boolean reverse, boolean reverseEncoder, double encoderMultiplier, int encoderPort1, int encoderPort2) {
-    super(devID, MotorType.kBrushed, reverse);
+  public SIMArm(int devID, boolean reverse, boolean reverseEncoder, double encoderMultiplier, int encoderPort1, int encoderPort2, String key) {
+    super(devID, MotorType.kBrushed, reverse, key);
     this.encoder = new Encoder(encoderPort1, encoderPort2);
     this.encoder.setReverseDirection(reverseEncoder);
     this.encoder.setDistancePerPulse(1 / (encoderMultiplier * Constants.tickPerRev));

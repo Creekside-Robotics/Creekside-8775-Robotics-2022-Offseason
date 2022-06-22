@@ -31,13 +31,13 @@ public class MoveArm extends CommandBase {
   public void execute() {
     switch (this.axis){
       case "X":
-        armSubsystem.setSpeed(RobotContainer.driveStick.getX());
+        armSubsystem.setSpeed(RobotContainer.climbStick.getX());
         break;
       case "Y":
-        armSubsystem.setSpeed(-RobotContainer.driveStick.getY());
+        armSubsystem.setSpeed(-RobotContainer.climbStick.getY());
         break;
       case "Z":
-        armSubsystem.setSpeed(RobotContainer.driveStick.getZ());
+        armSubsystem.setSpeed(RobotContainer.climbStick.getZ());
         break;
       default:
         armSubsystem.setSpeed(0);
