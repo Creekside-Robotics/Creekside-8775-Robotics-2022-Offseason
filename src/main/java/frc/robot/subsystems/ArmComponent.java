@@ -4,43 +4,35 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class ArmComponent extends SubsystemBase {
+// Base class of arm subsystem
+public abstract class ArmComponent extends SubsystemBase {
   /** Creates a new ArmComponent. */
-  private CANSparkMax mainMotor;
-  private double multiplier;
-  private double encoderMultiplier;
-  private Encoder encoder;
-
-  //Sensor input
-  public double position;
+  protected CANSparkMax mainMotor;
+  protected String key;
 
 
-  public ArmComponent(int deviceId, MotorType type, double multiplier, double revolutionsInRange, double encoderMultiplier, int port1, int port2) {
+  public ArmComponent(int deviceId, MotorType type, boolean reverse, String key) {
     this.mainMotor = new CANSparkMax(deviceId, type);
-    this.multiplier = multiplier;
-    this.encoderMultiplier = encoderMultiplier;
-    this.encoder = new Encoder(port1, port2);
-    this.encoder.setDistancePerPulse(1/(Constants.tickPerRev * revolutionsInRange));
+    this.mainMotor.setInverted(reverse);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    this.position = this.encoder.getDistance() * this.encoderMultiplier;
+    SmartDashboard.putNumber(key, getPosition());
   }
 
   public void setSpeed(double speed){
-    this.mainMotor.set(speed * this.multiplier);
+    this.mainMotor.set(speed);
   }
 
-  public void reset(){
-    this.encoder.reset();;
-  }
+  public abstract void resetPosition();
+
+  public abstract double getPosition();
 }

@@ -5,7 +5,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-//Sensor data management will be added once we recive the pigeon order.
+// Subsystem for shooter, more will be added when we add indexing system.
 public class Shooter extends SubsystemBase {
   //Robot objects
   private CANSparkMax flywheelMotor;
@@ -21,7 +21,7 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setRPM(double speed){
+  public void setSpeed(double speed){
     this.flywheelMotor.set(this.multiplier * speed);
   }
 

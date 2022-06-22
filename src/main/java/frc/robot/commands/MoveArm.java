@@ -4,19 +4,18 @@
 
 package frc.robot.commands;
 
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.ArmComponent;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+// Used to move arms manually
 public class MoveArm extends CommandBase {
   /** Creates a new MoveArm. */
   private ArmComponent armSubsystem;
-  private Joystick joy;
   private String axis;
 
-  public MoveArm(ArmComponent subsystem, Joystick joystick, String axis) {
+  public MoveArm(ArmComponent subsystem, String axis) {
     this.armSubsystem = subsystem;
-    this.joy = joystick;
     this.axis = axis;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -32,16 +31,18 @@ public class MoveArm extends CommandBase {
   public void execute() {
     switch (this.axis){
       case "X":
-        armSubsystem.setSpeed(joy.getX());
+        armSubsystem.setSpeed(RobotContainer.climbStick.getX());
         break;
       case "Y":
-        armSubsystem.setSpeed(-joy.getY());
+        armSubsystem.setSpeed(-RobotContainer.climbStick.getY());
         break;
       case "Z":
-        armSubsystem.setSpeed(joy.getZ());
+        armSubsystem.setSpeed(RobotContainer.climbStick.getZ());
+        break;
+      default:
+        armSubsystem.setSpeed(0);
         break;
     }
-
   }
 
   // Called once the command ends or is interrupted.

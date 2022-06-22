@@ -5,15 +5,13 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-//Sensor data management will be added once we recive the pigeon order.
+// Conveyor subsystem, is used to move balls into the shooter. Still debating whether this will be merged into the shooter subsystem when ball collector is added.
 public class Intake extends SubsystemBase {
   //Robot objects
   private final CANSparkMax backConveyerMotor;
   private final CANSparkMax frontConveyerMotor;
   private double multiplier;
   
-  //Sensor input varibles
-
   public Intake(double multiplier) {
     this.backConveyerMotor = new CANSparkMax(Constants.backConveyer, MotorType.kBrushed);
     this.frontConveyerMotor = new CANSparkMax(Constants.frontConveyer, MotorType.kBrushed);

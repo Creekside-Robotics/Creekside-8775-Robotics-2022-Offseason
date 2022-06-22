@@ -4,25 +4,21 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.CalibrateArm;
 import frc.robot.commands.ManualDrive;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunIntake;
-import frc.robot.commands.SetExtentionIntakeMode;
+import frc.robot.commands.SetArmPosition;
 import frc.robot.commands.TestArmMovement;
-import frc.robot.commands.TestAutoDrive;
-import frc.robot.subsystems.ArmComponent;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExtendedIntake;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,24 +28,31 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  Joystick driveStick = new Joystick(0);
-  Joystick climbStick = new Joystick(1);
 
+  // Joysticks
+  public static Joystick driveStick = new Joystick(0);
+  public static Joystick climbStick = new Joystick(1);
+
+  // Buttons for the drive stick
   JoystickButton shootTrigger = new JoystickButton(driveStick, 1);
   JoystickButton intakeButton = new JoystickButton(driveStick, 2);
-  JoystickButton extentionButton = new JoystickButton(driveStick, 7);
-  JoystickButton calibrateArmsButton = new JoystickButton(climbStick, 7);
-  JoystickButton testKinematicsButton = new JoystickButton(driveStick, 8);
-  JoystickButton testClimbCalibration = new JoystickButton(climbStick, 8);
 
+  // Climb Joystick Buttons
+  JoystickButton calibrateRed = new JoystickButton(climbStick, 7);
+  JoystickButton getIntoPosition = new JoystickButton(climbStick, 8);
+  JoystickButton calibrateYellow = new JoystickButton(climbStick, 9);
+  JoystickButton twoBarClimb = new JoystickButton(climbStick, 10);
+  JoystickButton calibrateTilt = new JoystickButton(climbStick, 11);
+  JoystickButton fourBarClimb = new JoystickButton(climbStick, 12);
+  JoystickButton activateArmMovement = new JoystickButton(climbStick, 1);
+
+  // The robot's subsystems
   Drivetrain drivetrain = new Drivetrain();
   Intake intake = new Intake(-1);
   Shooter shooter = new Shooter(1);
-  ArmComponent redArm = new ArmComponent(Constants.redArmId, MotorType.kBrushed, 1, Constants.redRevInRan, 1, 0, 1);
-  ArmComponent yellowArm = new ArmComponent(Constants.yellowArmId, MotorType.kBrushed, 1, Constants.yellowRevInRan, 1, 2, 3);
-  ArmComponent tiltArm = new ArmComponent(Constants.tiltId, MotorType.kBrushless, 1, Constants.tiltRevInRan, 1, 4, 5);
-  ExtendedIntake extIntake = new ExtendedIntake();
-
+  ArmComponent redArm = new SIMArm(Constants.redArmId, false, true, Constants.redRevInRan, 1, 0, "R");
+  ArmComponent yellowArm = new SIMArm(Constants.yellowArmId, false, false, Constants.yellowRevInRan, 2, 3, "Y");
+  ArmComponent tiltArm = new NeoArm(Constants.tiltId, true, Constants.tiltRevInRan, "T");
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -64,20 +67,72 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    drivetrain.setDefaultCommand(new ManualDrive(drivetrain, driveStick));
-    intake.setDefaultCommand(new RunIntake(intake, 1000000, 0));
-    shooter.setDefaultCommand(new RunFlywheel(shooter, 1000000, 0));
-    redArm.setDefaultCommand(new MoveArm(redArm, climbStick, "Y"));
-    yellowArm.setDefaultCommand(new MoveArm(yellowArm, climbStick, "X"));
-    tiltArm.setDefaultCommand(new MoveArm(tiltArm, climbStick, "Z"));
-    extIntake.setDefaultCommand(new SetExtentionIntakeMode(extIntake, false));
+    //Default commands for the different subsystems
+    drivetrain.setDefaultCommand(new ManualDrive(drivetrain));
+    intake.setDefaultCommand(new RunIntake(intake, 0));
+    shooter.setDefaultCommand(new RunFlywheel(shooter, 0));
+    redArm.setDefaultCommand(new MoveArm(redArm, "0"));
+    yellowArm.setDefaultCommand(new MoveArm(yellowArm, "0"));
+    tiltArm.setDefaultCommand(new MoveArm(tiltArm, "0"));
 
-    shootTrigger.whenHeld(new RunFlywheel(shooter, 1000000, 0.7));
-    intakeButton.whenHeld(new RunIntake(intake, 1000000, 0.5));
-    extentionButton.whenHeld(new SetExtentionIntakeMode(extIntake, true));
-    calibrateArmsButton.whenPressed(new CalibrateArm(redArm));
-    testKinematicsButton.whenHeld(new TestAutoDrive(drivetrain));
-    testClimbCalibration.whenHeld(new TestArmMovement(redArm));
+    //Button bindings for the different subsystems
+    shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
+    intakeButton.whenHeld(new RunIntake(intake, 0.5));
+    activateArmMovement.whenHeld(new ParallelCommandGroup(
+      new MoveArm(redArm, "Y"),
+      new MoveArm(yellowArm, "X"),
+      new MoveArm(tiltArm, "Z")
+    ));
+
+    //Button bindings for arm calibration and testing
+    calibrateRed.whenPressed(new CalibrateArm(redArm));
+    getIntoPosition.whenHeld(new SetArmPosition(redArm, 1, false));
+    calibrateYellow.whenPressed(new CalibrateArm(yellowArm));
+    twoBarClimb.whenHeld(new SetArmPosition(redArm, 0, true));
+    calibrateTilt.whenPressed(new CalibrateArm(tiltArm));
+    fourBarClimb.whenHeld(new SequentialCommandGroup(
+      new ParallelCommandGroup(
+        new SetArmPosition(redArm, 0, false),
+        new SetArmPosition(yellowArm, 1, false),
+        new SetArmPosition(tiltArm, 0, false)
+      ),
+      new ParallelDeadlineGroup(
+        new SetArmPosition(tiltArm, 0.35, false),
+        new SetArmPosition(redArm, 0, true),
+        new SetArmPosition(yellowArm, 1, true)
+      ),
+      new ParallelCommandGroup(
+        new SetArmPosition(yellowArm, 0, false),
+        new SetArmPosition(tiltArm, 0.9, false),
+        new SetArmPosition(redArm, 0, false)
+      ),
+      new ParallelDeadlineGroup(
+        new SetArmPosition(redArm, 0.7, false),
+        new SetArmPosition(yellowArm, 0, true),
+        new SetArmPosition(tiltArm, 0.9, true) 
+      ),
+      new ParallelDeadlineGroup(
+        new SetArmPosition(tiltArm, 0.5, false),
+        new SetArmPosition(redArm, 0.8, true),
+        new SetArmPosition(yellowArm, 0, true)
+      ),
+      new ParallelCommandGroup(
+        new SetArmPosition(tiltArm, 0.5, false),
+        new SetArmPosition(redArm, 0, false),
+        new SetArmPosition(yellowArm, 1, false)
+      ),
+      new ParallelDeadlineGroup(
+        new SetArmPosition(tiltArm, 0.1, false),
+        new SetArmPosition(redArm, 0, true),
+        new SetArmPosition(yellowArm, 1, true)
+      ),
+      new ParallelCommandGroup(
+        new SetArmPosition(tiltArm, 0.1, false),
+        new SetArmPosition(redArm, 0, false),
+        new SetArmPosition(yellowArm, 0, false)
+      )
+    ));
+
   }
 
   /**
@@ -86,6 +141,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    // Autonomous command is yet to be developed
     return null;
   }
 }

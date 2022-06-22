@@ -3,15 +3,19 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-//Sensor data management will be added once we recive the pigeon order.
+// Drivetrain, odometry, and drive commands will be added soon.
 public class Drivetrain extends SubsystemBase {
   //Robot objects
   private final WPI_VictorSPX myVictor1;
@@ -21,14 +25,13 @@ public class Drivetrain extends SubsystemBase {
   private final MotorControllerGroup groupleft;
   private final MotorControllerGroup groupright;
   private DifferentialDrive robotDrive;
-  private Pigeon2 pigeon2;
 
-  //Sensor input varibles
-  private double previousTime = System.currentTimeMillis() / 1000;
-  public double acceleration = 0;
-  public double velocity = 0;
-  public double displacement = 0;
-  public double yaw = 0;
+  // Automation objects
+  private Encoder leftEncoder;
+  private Encoder rightEncoder;
+  private Pigeon2 pigeon;
+  private DifferentialDriveOdometry odometry;
+
 
   public Drivetrain() {
     this.myVictor1 = new WPI_VictorSPX(Constants.drivetrain1);
@@ -39,51 +42,51 @@ public class Drivetrain extends SubsystemBase {
     this.groupright = new MotorControllerGroup(myVictor3, myVictor4);
     this.groupright.setInverted(true);
     this.robotDrive = new DifferentialDrive(groupright, groupleft);
-    this.pigeon2 = new Pigeon2(Constants.pigeonId);
+
+    this.leftEncoder = new Encoder(Constants.leftEncoder1, Constants.leftEncoder2, false);
+    this.leftEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
+
+    this.rightEncoder = new Encoder(Constants.rightEncoder1, Constants.rightEncoder2, false);
+    this.rightEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
+
+    this.pigeon = new Pigeon2(0);
+
+    this.odometry = new DifferentialDriveOdometry(new Rotation2d(0));
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double timeDiff = System.currentTimeMillis() / 1000 - this.previousTime;
-    this.previousTime = System.currentTimeMillis() / 1000;
-    short[] accelerationArray = new short[3];
-    this.pigeon2.getBiasedAccelerometer(accelerationArray);
-    this.acceleration = accelerationArray[1] / 16384 * 9.8;
-    this.velocity += this.acceleration * timeDiff;
-    this.displacement += this.velocity * timeDiff;
-    this.yaw = -this.pigeon2.getYaw();
+    this.odometry.update(getRotation(), this.leftEncoder.getDistance(), this.rightEncoder.getDistance());
   }
 
   public void setMovement(double speed, double turnRate){
     this.robotDrive.arcadeDrive(speed, -turnRate);
   }
 
-  public void setBrake(boolean mode){
-    if(mode){
-      this.myVictor1.setNeutralMode(NeutralMode.Brake);
-      this.myVictor2.setNeutralMode(NeutralMode.Brake);
-      this.myVictor3.setNeutralMode(NeutralMode.Brake);
-      this.myVictor4.setNeutralMode(NeutralMode.Brake);
-    } else {
-      this.myVictor1.setNeutralMode(NeutralMode.Coast);
-      this.myVictor2.setNeutralMode(NeutralMode.Coast);
-      this.myVictor3.setNeutralMode(NeutralMode.Coast);
-      this.myVictor4.setNeutralMode(NeutralMode.Coast);
-    }
+  public Pose2d getPose() {
+    return this.odometry.getPoseMeters();
   }
 
-  public void resetKenematics(){
-    this.velocity = 0;
-    this.displacement = 0;
+  public Rotation2d getRotation(){
+    return Rotation2d.fromDegrees(this.pigeon.getYaw());
   }
 
-  public void resetDisplacement(){
-    this.displacement = 0;
+  public void tankDriveVolts(double leftVolts, double rightVolts){
+    this.groupleft.setVoltage(leftVolts);
+    this.groupright.setVoltage(rightVolts);
+    this.robotDrive.feed();
   }
 
-  public void resetYaw(){
-    this.pigeon2.setYaw(0);
+  public DifferentialDriveWheelSpeeds wheelSpeeds(){
+    return new DifferentialDriveWheelSpeeds(this.leftEncoder.getRate(), this.rightEncoder.getRate());
+  }
+
+  public void resetPose(){
+    this.leftEncoder.reset();
+    this.rightEncoder.reset();
+    this.pigeon.setYaw(0);
+    this.odometry.resetPosition(new Pose2d(), getRotation());
   }
 
   @Override
