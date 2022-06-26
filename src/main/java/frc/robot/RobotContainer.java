@@ -8,16 +8,14 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.CalibrateArm;
+import frc.robot.commands.ClimbRoutine;
 import frc.robot.commands.ManualDrive;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.RunFlywheel;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SetArmPosition;
-import frc.robot.commands.TestArmMovement;
 import frc.robot.subsystems.*;
 
 /**
@@ -90,48 +88,7 @@ public class RobotContainer {
     calibrateYellow.whenPressed(new CalibrateArm(yellowArm));
     twoBarClimb.whenHeld(new SetArmPosition(redArm, 0, true));
     calibrateTilt.whenPressed(new CalibrateArm(tiltArm));
-    fourBarClimb.whenHeld(new SequentialCommandGroup(
-      new ParallelCommandGroup(
-        new SetArmPosition(redArm, 0, false),
-        new SetArmPosition(yellowArm, 1, false),
-        new SetArmPosition(tiltArm, 0, false)
-      ),
-      new ParallelDeadlineGroup(
-        new SetArmPosition(tiltArm, 0.35, false),
-        new SetArmPosition(redArm, 0, true),
-        new SetArmPosition(yellowArm, 1, true)
-      ),
-      new ParallelCommandGroup(
-        new SetArmPosition(yellowArm, 0, false),
-        new SetArmPosition(tiltArm, 0.9, false),
-        new SetArmPosition(redArm, 0, false)
-      ),
-      new ParallelDeadlineGroup(
-        new SetArmPosition(redArm, 0.7, false),
-        new SetArmPosition(yellowArm, 0, true),
-        new SetArmPosition(tiltArm, 0.9, true) 
-      ),
-      new ParallelDeadlineGroup(
-        new SetArmPosition(tiltArm, 0.5, false),
-        new SetArmPosition(redArm, 0.8, true),
-        new SetArmPosition(yellowArm, 0, true)
-      ),
-      new ParallelCommandGroup(
-        new SetArmPosition(tiltArm, 0.5, false),
-        new SetArmPosition(redArm, 0, false),
-        new SetArmPosition(yellowArm, 1, false)
-      ),
-      new ParallelDeadlineGroup(
-        new SetArmPosition(tiltArm, 0.1, false),
-        new SetArmPosition(redArm, 0, true),
-        new SetArmPosition(yellowArm, 1, true)
-      ),
-      new ParallelCommandGroup(
-        new SetArmPosition(tiltArm, 0.1, false),
-        new SetArmPosition(redArm, 0, false),
-        new SetArmPosition(yellowArm, 0, false)
-      )
-    ));
+    fourBarClimb.whenHeld(new ClimbRoutine(redArm, yellowArm, tiltArm));
 
   }
 

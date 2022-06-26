@@ -35,4 +35,6 @@ public abstract class ArmComponent extends SubsystemBase {
   public abstract void resetPosition();
 
   public abstract double getPosition();
+
+  public abstract double getEncoderRate();
 }
