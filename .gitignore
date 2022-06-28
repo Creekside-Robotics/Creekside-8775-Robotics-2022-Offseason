@@ -1,4 +1,7 @@
 #Build artifacts
 bin
 .gradle
+build
+
+.vscode
 .tool-versions
