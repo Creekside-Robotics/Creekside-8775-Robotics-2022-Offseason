@@ -78,15 +78,15 @@ public class Drivetrain extends SubsystemBase {
     this.robotDrive.feed();
   }
 
-  public DifferentialDriveWheelSpeeds wheelSpeeds(){
+  public DifferentialDriveWheelSpeeds getWheelSpeeds(){
     return new DifferentialDriveWheelSpeeds(this.leftEncoder.getRate(), this.rightEncoder.getRate());
   }
 
-  public void resetPose(){
+  public void setPose(Pose2d pose) {
     this.leftEncoder.reset();
     this.rightEncoder.reset();
-    this.pigeon.setYaw(0);
-    this.odometry.resetPosition(new Pose2d(), getRotation());
+    this.pigeon.setYaw(pose.getRotation().getDegrees());
+    this.odometry.resetPosition(pose, pose.getRotation());
   }
 
   @Override
