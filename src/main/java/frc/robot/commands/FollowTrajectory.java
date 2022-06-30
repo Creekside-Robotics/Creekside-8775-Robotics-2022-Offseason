@@ -21,7 +21,9 @@ public class FollowTrajectory extends CommandBase {
 
   public FollowTrajectory(Drivetrain drivetrain, Trajectory trajectory, boolean stopWhenFinished) {
     // Use addRequirements() here to declare subsystem dependencies.
+
     this.trajectory = trajectory.relativeTo(drivetrain.getPose());
+
     this.ramseteCommand = new RamseteCommand(
       this.trajectory, 
       drivetrain::getPose, 
