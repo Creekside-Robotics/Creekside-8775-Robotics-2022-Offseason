@@ -76,8 +76,8 @@ public class RobotContainer {
     tiltArm.setDefaultCommand(new MoveArm(tiltArm, "0"));
 
     //Button bindings for the different subsystems
-    shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
-    intakeButton.whenHeld(new RunIntake(intake, 0.5));
+    shootTrigger.whenHeld(new RunFlywheel(shooter, 4.7));
+    intakeButton.whenHeld(new RunIntake(intake, 100.5));
     activateArmMovement.whenHeld(new ParallelCommandGroup(
       new MoveArm(redArm, "Y"),
       new MoveArm(yellowArm, "X"),
@@ -109,7 +109,7 @@ public class RobotContainer {
       new ParallelDeadlineGroup(
         new SetArmPosition(redArm, 0.7, false),
         new SetArmPosition(yellowArm, 0, true),
-        new SetArmPosition(tiltArm, 0.9, true) 
+        new SetArmPosition(tiltArm, 0.9, true)
       ),
       new ParallelDeadlineGroup(
         new SetArmPosition(tiltArm, 0.5, false),
