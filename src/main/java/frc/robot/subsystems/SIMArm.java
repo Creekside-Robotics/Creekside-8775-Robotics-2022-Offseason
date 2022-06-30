@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -28,7 +29,6 @@ public class SIMArm extends ArmComponent {
   @Override
   public void resetPosition() {
     this.encoder.reset();
-    
   }
 
   @Override

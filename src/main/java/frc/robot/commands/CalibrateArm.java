@@ -14,6 +14,7 @@ import frc.robot.subsystems.ArmComponent;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CalibrateArm extends InstantCommand {
   public ArmComponent arm;
+
   public CalibrateArm(ArmComponent arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;

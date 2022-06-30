@@ -16,11 +16,9 @@ public class AutoCalibrateArm extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MoveArmUntilStall(arm, movementSpeed, thresholdForStop),
-      new CalibrateArm(arm),
-      new SetArmPosition(arm, offsetPosition, false),
-      new CalibrateArm(arm)
-    );
-
+        new MoveArmUntilStall(arm, movementSpeed, thresholdForStop),
+        new CalibrateArm(arm),
+        new SetArmPosition(arm, offsetPosition, false),
+        new CalibrateArm(arm));
   }
 }

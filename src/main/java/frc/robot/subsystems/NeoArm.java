@@ -11,12 +11,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class NeoArm extends ArmComponent {
   /** Creates a new NeoArm. */
   private RelativeEncoder encoder;
-  
+
   public NeoArm(int devId, boolean reverse, double encoderMultiplier, String key) {
     super(devId, MotorType.kBrushless, reverse, key);
     this.encoder = this.mainMotor.getEncoder();
-    this.encoder.setPositionConversionFactor(1 / 
-    encoderMultiplier);
+    this.encoder.setPositionConversionFactor(1 / encoderMultiplier);
     this.encoder.setVelocityConversionFactor(1 / (encoderMultiplier * 60));
   }
 
@@ -38,6 +37,5 @@ public class NeoArm extends ArmComponent {
   @Override
   public double getEncoderRate() {
     return this.encoder.getVelocity();
-    
   }
 }

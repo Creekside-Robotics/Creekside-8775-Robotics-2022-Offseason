@@ -16,7 +16,6 @@ public abstract class ArmComponent extends SubsystemBase {
   protected CANSparkMax mainMotor;
   protected String key;
 
-
   public ArmComponent(int deviceId, MotorType type, boolean reverse, String key) {
     this.mainMotor = new CANSparkMax(deviceId, type);
     this.mainMotor.setInverted(reverse);
@@ -28,7 +27,7 @@ public abstract class ArmComponent extends SubsystemBase {
     SmartDashboard.putNumber(key, getPosition());
   }
 
-  public void setSpeed(double speed){
+  public void setSpeed(double speed) {
     this.mainMotor.set(speed);
   }
 

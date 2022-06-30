@@ -14,13 +14,13 @@ public class MoveArmUntilStall extends CommandBase {
   private double speed;
   private double threshold;
   private Timer timer;
+
   public MoveArmUntilStall(ArmComponent arm, double speed, double threshold) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
     this.speed = speed;
     this.threshold = threshold;
     this.timer = new Timer();
-
   }
 
   // Called when the command is initially scheduled.
@@ -37,7 +37,8 @@ public class MoveArmUntilStall extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

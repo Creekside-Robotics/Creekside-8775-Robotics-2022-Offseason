@@ -14,18 +14,19 @@ import frc.robot.subsystems.ArmComponent;
 public class TestArmMovement extends SequentialCommandGroup {
   /** Creates a new TestArmMovement. */
   private ArmComponent arm;
+
   public TestArmMovement(ArmComponent arm) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     this.arm = arm;
     addCommands(
-      new SetArmPosition(this.arm, 0, false),
-      new SetArmPosition(this.arm, 0.5, false),
-      new SetArmPosition(this.arm, 0.25, false),
-      new SetArmPosition(this.arm, 0.75, false),
-      new SetArmPosition(this.arm, 0.5, false),
-      new SetArmPosition(this.arm, 1.0, false),
-      new SetArmPosition(this.arm, 0, false)
+        new SetArmPosition(this.arm, 0, false),
+        new SetArmPosition(this.arm, 0.5, false),
+        new SetArmPosition(this.arm, 0.25, false),
+        new SetArmPosition(this.arm, 0.75, false),
+        new SetArmPosition(this.arm, 0.5, false),
+        new SetArmPosition(this.arm, 1.0, false),
+        new SetArmPosition(this.arm, 0, false)
     );
   }
 }
