@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // Subsystem for shooter, more will be added when we add indexing system.
 public class Shooter extends SubsystemBase {
-  //Robot objects
+  // Robot objects
   private CANSparkMax flywheelMotor;
   private double multiplier;
 
@@ -21,7 +21,7 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setSpeed(double speed){
+  public void setSpeed(double speed) {
     this.flywheelMotor.set(this.multiplier * speed);
   }
 

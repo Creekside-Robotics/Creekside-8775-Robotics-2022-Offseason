@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // Drivetrain, odometry, and drive commands will be added soon.
 public class Drivetrain extends SubsystemBase {
-  //Robot objects
+  // Robot objects
   private final WPI_VictorSPX myVictor1;
   private final WPI_VictorSPX myVictor2;
   private final WPI_VictorSPX myVictor3;
@@ -31,7 +31,6 @@ public class Drivetrain extends SubsystemBase {
   private Encoder rightEncoder;
   private Pigeon2 pigeon;
   private DifferentialDriveOdometry odometry;
-
 
   public Drivetrain() {
     this.myVictor1 = new WPI_VictorSPX(Constants.drivetrain1);
@@ -60,7 +59,7 @@ public class Drivetrain extends SubsystemBase {
     this.odometry.update(getRotation(), this.leftEncoder.getDistance(), this.rightEncoder.getDistance());
   }
 
-  public void setMovement(double speed, double turnRate){
+  public void setMovement(double speed, double turnRate) {
     this.robotDrive.arcadeDrive(speed, -turnRate);
   }
 
@@ -68,17 +67,17 @@ public class Drivetrain extends SubsystemBase {
     return this.odometry.getPoseMeters();
   }
 
-  public Rotation2d getRotation(){
+  public Rotation2d getRotation() {
     return Rotation2d.fromDegrees(this.pigeon.getYaw());
   }
 
-  public void tankDriveVolts(double leftVolts, double rightVolts){
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
     this.groupleft.setVoltage(leftVolts);
     this.groupright.setVoltage(rightVolts);
     this.robotDrive.feed();
   }
 
-  public DifferentialDriveWheelSpeeds getWheelSpeeds(){
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(this.leftEncoder.getRate(), this.rightEncoder.getRate());
   }
 

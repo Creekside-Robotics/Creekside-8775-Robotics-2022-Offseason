@@ -22,7 +22,6 @@ public class SetArmPosition extends CommandBase {
     this.hold = hold;
     this.endPosition = position;
     addRequirements(this.arm);
-
   }
 
   // Called when the command is initially scheduled.
@@ -36,7 +35,7 @@ public class SetArmPosition extends CommandBase {
     double difference = this.endPosition - this.arm.getPosition();
     if (Math.abs(difference) < tolerance) {
       this.arm.setSpeed(0);
-    }else if (difference > 0) {
+    } else if (difference > 0) {
       this.arm.setSpeed(this.speed);
     } else if (difference < 0) {
       this.arm.setSpeed(-this.speed);
@@ -45,7 +44,8 @@ public class SetArmPosition extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

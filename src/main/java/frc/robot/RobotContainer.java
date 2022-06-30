@@ -19,9 +19,12 @@ import frc.robot.commands.SetArmPosition;
 import frc.robot.subsystems.*;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
@@ -52,20 +55,24 @@ public class RobotContainer {
   ArmComponent yellowArm = new SIMArm(Constants.yellowArmId, false, false, Constants.yellowRevInRan, 2, 3, "Y");
   ArmComponent tiltArm = new NeoArm(Constants.tiltId, true, Constants.tiltRevInRan, "T");
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //Default commands for the different subsystems
+    // Default commands for the different subsystems
     drivetrain.setDefaultCommand(new ManualDrive(drivetrain));
     intake.setDefaultCommand(new RunIntake(intake, 0));
     shooter.setDefaultCommand(new RunFlywheel(shooter, 0));
@@ -73,23 +80,22 @@ public class RobotContainer {
     yellowArm.setDefaultCommand(new MoveArm(yellowArm, "0"));
     tiltArm.setDefaultCommand(new MoveArm(tiltArm, "0"));
 
-    //Button bindings for the different subsystems
+    // Button bindings for the different subsystems
     shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
     intakeButton.whenHeld(new RunIntake(intake, 0.5));
     activateArmMovement.whenHeld(new ParallelCommandGroup(
-      new MoveArm(redArm, "Y"),
-      new MoveArm(yellowArm, "X"),
-      new MoveArm(tiltArm, "Z")
+        new MoveArm(redArm, "Y"),
+        new MoveArm(yellowArm, "X"),
+        new MoveArm(tiltArm, "Z")
     ));
 
-    //Button bindings for arm calibration and testing
+    // Button bindings for arm calibration and testing
     calibrateRed.whenPressed(new CalibrateArm(redArm));
     getIntoPosition.whenHeld(new SetArmPosition(redArm, 1, false));
     calibrateYellow.whenPressed(new CalibrateArm(yellowArm));
     twoBarClimb.whenHeld(new SetArmPosition(redArm, 0, true));
     calibrateTilt.whenPressed(new CalibrateArm(tiltArm));
     fourBarClimb.whenHeld(new ClimbRoutine(redArm, yellowArm, tiltArm));
-
   }
 
   /**

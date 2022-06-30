@@ -24,12 +24,13 @@ public class MoveArm extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    switch (this.axis){
+    switch (this.axis) {
       case "X":
         armSubsystem.setSpeed(RobotContainer.climbStick.getX());
         break;
@@ -47,7 +48,8 @@ public class MoveArm extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
