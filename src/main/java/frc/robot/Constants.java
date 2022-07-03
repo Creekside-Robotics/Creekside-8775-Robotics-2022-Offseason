@@ -62,15 +62,15 @@ public final class Constants {
     public static final double kRamseteZeta = 0.7;
 
     // Port Numbers
-    public static int portZero = 0;
-    public static int portOne = 1;
+    public static int driveStickPortNumber = 0;
+    public static int climbStickPortNumber = 1;
 
     // Shooting mechanism speed
-    public static int defualtShooterSpeed = 0;
+    public static int defaultShooterSpeed = 0;
     public static double shootTriggerSpeed = 0.7;
 
     // Intake speed
-    public static int defualtIntakeSpeed = 0;
+    public static int defaultIntakeSpeed = 0;
     public static double intakeButtonSpeed = 0.5;
 
     //Default Axis For Arms
