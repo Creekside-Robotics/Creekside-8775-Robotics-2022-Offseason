@@ -18,7 +18,7 @@ This code has had, and will have lots of improvements over our 2022 regular seas
 ## Necessary Software
 There is some software that you will need to work on the project. It is recommended that you install software as instructed in on WPILIB's [website](https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-2/wpilib-setup.html). This will setup the necessary tools for you to develop in vscode. 
 
-If you want however, you can develop in any enviorment that suites you, as long as you download the necessary software (JDK, etc.).
+If you want however, you can develop in any enviorment that suites you, as long as you download the necessary components (JDK, etc.).
 
 ## Documentation for WPILIB and other libraries
 Documentation for of the important libraries used in this project.
