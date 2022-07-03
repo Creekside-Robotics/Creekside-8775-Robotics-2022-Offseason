@@ -60,4 +60,25 @@ public final class Constants {
 
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
+
+    // Port Numbers
+    public static int portZero = 0;
+    public static int portOne = 1;
+
+    // Shooting mechanism speed
+    public static int defualtShooterSpeed = 0;
+    public static double shootTriggerSpeed = 0.7;
+
+    // Intake speed
+    public static int defualtIntakeSpeed = 0;
+    public static double intakeButtonSpeed = 0.5;
+
+    //Default Axis For Arms
+    public static String defaultRedArmPosition = "0";
+    public static String defaultYellowArmPosition = "0";
+    public static String defaultTiltArmPosition = "0";
+    // Axis' for arms
+    public static String redArmAxis = "Y";
+    public static String yellowArmAxis = "X";
+    public static String tiltArmAxis = "Z";
 }
