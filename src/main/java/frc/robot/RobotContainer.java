@@ -31,8 +31,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // Joysticks
-  public static Joystick driveStick = new Joystick(0);
-  public static Joystick climbStick = new Joystick(1);
+  public static Joystick driveStick = new Joystick(Constants.portZero);
+  public static Joystick climbStick = new Joystick(Constants.portOne);
 
   // Buttons for the drive stick
   JoystickButton shootTrigger = new JoystickButton(driveStick, 1);
@@ -74,19 +74,19 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Default commands for the different subsystems
     drivetrain.setDefaultCommand(new ManualDrive(drivetrain));
-    intake.setDefaultCommand(new RunIntake(intake, 0));
-    shooter.setDefaultCommand(new RunFlywheel(shooter, 0));
-    redArm.setDefaultCommand(new MoveArm(redArm, "0"));
-    yellowArm.setDefaultCommand(new MoveArm(yellowArm, "0"));
-    tiltArm.setDefaultCommand(new MoveArm(tiltArm, "0"));
+    intake.setDefaultCommand(new RunIntake(intake, Constants.defualtIntakeSpeed));
+    shooter.setDefaultCommand(new RunFlywheel(shooter, Constants.defualtShooterSpeed));
+    redArm.setDefaultCommand(new MoveArm(redArm, Constants.defaultRedArmPosition));
+    yellowArm.setDefaultCommand(new MoveArm(yellowArm, Constants.defaultYellowArmPosition));
+    tiltArm.setDefaultCommand(new MoveArm(tiltArm, Constants.defaultTiltArmPosition));
 
     // Button bindings for the different subsystems
-    shootTrigger.whenHeld(new RunFlywheel(shooter, 0.7));
-    intakeButton.whenHeld(new RunIntake(intake, 0.5));
+    shootTrigger.whenHeld(new RunFlywheel(shooter, Constants.shootTriggerSpeed));
+    intakeButton.whenHeld(new RunIntake(intake, Constants.intakeButtonSpeed));
     activateArmMovement.whenHeld(new ParallelCommandGroup(
-        new MoveArm(redArm, "Y"),
-        new MoveArm(yellowArm, "X"),
-        new MoveArm(tiltArm, "Z")
+        new MoveArm(redArm, Constants.redArmAxis),
+        new MoveArm(yellowArm, Constants.yellowArmAxis),
+        new MoveArm(tiltArm, Constants.tiltArmAxis)
     ));
 
     // Button bindings for arm calibration and testing
