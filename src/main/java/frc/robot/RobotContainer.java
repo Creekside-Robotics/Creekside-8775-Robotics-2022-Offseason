@@ -31,8 +31,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // Joysticks
-  public static Joystick driveStick = new Joystick(Constants.portZero);
-  public static Joystick climbStick = new Joystick(Constants.portOne);
+  public static Joystick driveStick = new Joystick(Constants.driveStickPortNumber);
+  public static Joystick climbStick = new Joystick(Constants.climbStickPortNumber);
 
   // Buttons for the drive stick
   JoystickButton shootTrigger = new JoystickButton(driveStick, 1);
@@ -74,8 +74,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Default commands for the different subsystems
     drivetrain.setDefaultCommand(new ManualDrive(drivetrain));
-    intake.setDefaultCommand(new RunIntake(intake, Constants.defualtIntakeSpeed));
-    shooter.setDefaultCommand(new RunFlywheel(shooter, Constants.defualtShooterSpeed));
+    intake.setDefaultCommand(new RunIntake(intake, Constants.defaultIntakeSpeed));
+    shooter.setDefaultCommand(new RunFlywheel(shooter, Constants.defaultShooterSpeed));
     redArm.setDefaultCommand(new MoveArm(redArm, Constants.defaultRedArmPosition));
     yellowArm.setDefaultCommand(new MoveArm(yellowArm, Constants.defaultYellowArmPosition));
     tiltArm.setDefaultCommand(new MoveArm(tiltArm, Constants.defaultTiltArmPosition));
