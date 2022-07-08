@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -45,18 +46,34 @@ public abstract class AbstractCamera extends SubsystemBase {
     }
 
     /**
+     * Finds the camera's best target
+     */
+    public PhotonTrackedTarget getBestTarget() {
+        var result = this.camera.getLatestResult();
+        if (!result.hasTargets()) {
+            return null;
+        }
+        return result.getBestTarget();
+    }
+
+    /**
+     * Gets the distance between the camera and the target
+     * 
+     * @param target The target to get the distance from
+     * @return The distance between the camera and the target, in meters
+    */
+    public double getDistance(PhotonTrackedTarget target) {
+        return PhotonUtils.calculateDistanceToTargetMeters(this.cameraHeight, this.targetHeight, this.cameraPitch, target.getPitch());
+    }
+
+    /**
      * Finds the translation to the camera's current target
      * 
      * @return The translation to the camera's best target
      */
     public Translation2d getRelativeTranslation() {
-        var result = this.camera.getLatestResult();
-        if (!result.hasTargets()) {
-            return null;
-        }
-        var target = result.getBestTarget();
-
-        double distance = PhotonUtils.calculateDistanceToTargetMeters(this.cameraHeight, this.targetHeight, this.cameraPitch, target.getPitch());
+        var target = this.getBestTarget();
+        double distance = this.getDistance(target);
 
         Translation2d translation = PhotonUtils.estimateCameraToTargetTranslation(
             distance, Rotation2d.fromDegrees(-target.getYaw())
