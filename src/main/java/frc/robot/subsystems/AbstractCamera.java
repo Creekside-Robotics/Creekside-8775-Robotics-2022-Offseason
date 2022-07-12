@@ -50,9 +50,6 @@ public abstract class AbstractCamera extends SubsystemBase {
      */
     public PhotonTrackedTarget getBestTarget() {
         var result = this.camera.getLatestResult();
-        if (!result.hasTargets()) {
-            return null;
-        }
         return result.getBestTarget();
     }
 
@@ -73,6 +70,9 @@ public abstract class AbstractCamera extends SubsystemBase {
      */
     public Translation2d getRelativeTranslation() {
         var target = this.getBestTarget();
+        if (target == null) {
+            return null;
+        }
         double distance = this.getDistance(target);
 
         Translation2d translation = PhotonUtils.estimateCameraToTargetTranslation(
