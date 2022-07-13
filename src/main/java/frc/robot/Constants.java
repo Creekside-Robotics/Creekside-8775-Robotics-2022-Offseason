@@ -60,4 +60,25 @@ public final class Constants {
 
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
+
+    // Port Numbers
+    public static int driveStickPortNumber = 0;
+    public static int climbStickPortNumber = 1;
+
+    // Shooting mechanism speed
+    public static int defaultShooterSpeed = 0;
+    public static double shootTriggerSpeed = 0.7;
+
+    // Intake speed
+    public static int defaultIntakeSpeed = 0;
+    public static double intakeButtonSpeed = 0.5;
+
+    //Default Axis For Arms
+    public static String defaultRedArmPosition = "0";
+    public static String defaultYellowArmPosition = "0";
+    public static String defaultTiltArmPosition = "0";
+    // Axis' for arms
+    public static String redArmAxis = "Y";
+    public static String yellowArmAxis = "X";
+    public static String tiltArmAxis = "Z";
 }
