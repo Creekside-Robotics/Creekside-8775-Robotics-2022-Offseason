@@ -33,7 +33,11 @@ They can also be run from the GUI of vscode using the "Test Runner for Java" ext
 
 ## Resolving Merge Conflicts
 
-Unfortunately GitHub makes resolving merge conflicts harder than it needs to
+See something like this?
+
+![image](https://user-images.githubusercontent.com/58612/178773622-c5c66379-4020-47f0-aa52-68d22b86744e.png)
+
+DO NOT click that "Resolve Conflicts" button. Unfortunately GitHub makes resolving merge conflicts harder than it needs to
 be, but don't worry! You can follow these steps and get your branch up to date
 quickly.
 
