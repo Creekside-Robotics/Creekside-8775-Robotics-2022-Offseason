@@ -33,6 +33,8 @@ They can also be run from the GUI of vscode using the "Test Runner for Java" ext
 
 ## Resolving Merge Conflicts
 
+Stuff goes here
+
 See something like this?
 
 ![image](https://user-images.githubusercontent.com/58612/178773622-c5c66379-4020-47f0-aa52-68d22b86744e.png)
