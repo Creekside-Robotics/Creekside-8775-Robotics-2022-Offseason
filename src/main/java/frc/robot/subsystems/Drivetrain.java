@@ -45,7 +45,7 @@ public class Drivetrain extends SubsystemBase {
     this.leftEncoder = new Encoder(Constants.leftEncoder1, Constants.leftEncoder2, false);
     this.leftEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
 
-    this.rightEncoder = new Encoder(Constants.rightEncoder1, Constants.rightEncoder2, false);
+    this.rightEncoder = new Encoder(Constants.rightEncoder1, Constants.rightEncoder2, true);
     this.rightEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
 
     this.pigeon = new Pigeon2(0);

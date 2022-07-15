@@ -44,7 +44,7 @@ public final class Constants {
     public static int rightEncoder2 = 7;
 
     // Drivetrain Physical Constants
-    public static double drivetrainDistancePerPulse = 0.0024;
+    public static double drivetrainDistancePerPulse = 0.000233771777; // Based on CAD values, will need to be verified.
 
     public static final double ksVolts = 0.22;
     public static final double kvVoltSecondsPerMeter = 1.98;
