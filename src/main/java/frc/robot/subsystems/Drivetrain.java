@@ -40,7 +40,7 @@ public class Drivetrain extends SubsystemBase {
     this.groupleft = new MotorControllerGroup(myVictor1, myVictor2);
     this.groupright = new MotorControllerGroup(myVictor3, myVictor4);
     this.groupright.setInverted(true);
-    this.robotDrive = new DifferentialDrive(groupright, groupleft);
+    this.robotDrive = new DifferentialDrive(groupleft, groupright);
 
     this.leftEncoder = new Encoder(Constants.leftEncoder1, Constants.leftEncoder2, false);
     this.leftEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
@@ -60,7 +60,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setMovement(double speed, double turnRate) {
-    this.robotDrive.arcadeDrive(speed, -turnRate);
+    this.robotDrive.arcadeDrive(speed, turnRate);
   }
 
   public Pose2d getPose() {
