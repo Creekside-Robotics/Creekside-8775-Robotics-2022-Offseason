@@ -41,6 +41,8 @@ DO NOT click that "Resolve Conflicts" button. Unfortunately GitHub makes resolvi
 be, but don't worry! You can follow these steps and get your branch up to date
 quickly.
 
+For a full explanation you can watch [this video](https://www.youtube.com/watch?v=I0hUvy7SW6M). She shows an example and explains the whole process really well.
+
 To do this you will need to run some commands in a terminal. VS Code has one you can access or you can use your system's terminal emulator (Windows Terminal on Windows 10+ or Terminal on OS X).
 
 1. Ensure your local main is up to date.
