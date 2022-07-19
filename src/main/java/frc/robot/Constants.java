@@ -67,7 +67,7 @@ public final class Constants {
 
     // Shooting mechanism speed
     public static int defaultShooterSpeed = 0;
-    public static double shootTriggerSpeed = 0.7;
+    public static double shootTriggerSpeed = 9;
 
     // Intake speed
     public static int defaultIntakeSpeed = 0;
@@ -78,6 +78,7 @@ public final class Constants {
     public static String defaultYellowArmPosition = "0";
     public static String defaultTiltArmPosition = "0";
     // Axis' for arms
+
     public static String redArmAxis = "Y";
     public static String yellowArmAxis = "X";
     public static String tiltArmAxis = "Z";
