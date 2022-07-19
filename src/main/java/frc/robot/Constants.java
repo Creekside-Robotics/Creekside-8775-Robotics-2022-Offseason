@@ -78,7 +78,8 @@ public final class Constants {
     public static String defaultYellowArmPosition = "0";
     public static String defaultTiltArmPosition = "0";
     // Axis' for arms
-}
+
     public static String redArmAxis = "Y";
     public static String yellowArmAxis = "X";
     public static String tiltArmAxis = "Z";
+}
