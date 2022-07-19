@@ -20,9 +20,9 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-
-  public void setSpeed(double speed) {
-    this.flywheelMotor.set(this.multiplier * speed);
+  //Changed the setSpeed() method to setFlywheelVoltage() and adjusted the parameter to correspond
+  public void setFlywheelVoltage(double voltage) { 
+    this.flywheelMotor.set(this.multiplier * voltage);
   }
 
   @Override
