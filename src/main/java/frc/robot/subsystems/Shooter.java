@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
   }
   
   public void setFlywheelVoltage(double voltage) { 
-    this.flywheelMotor.set(this.multiplier * voltage);
+    this.flywheelMotor.setVoltage(this.multiplier * voltage);
   }
 
   @Override
