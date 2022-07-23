@@ -13,7 +13,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class TargetCamera extends AbstractCamera {
     
     public TargetCamera(){
-        super.AbstractCamera(); // Calling to the parent class to define variables
+        
+        // Calling to the parent class to define variables
+        double cameraHeight = super.cameraHeight;
+        double cameraPitch = super.camerPitch;
+        double cameraOffset = super.cameraOffset;
+        double target_height = super.targetHeight;
+        
 
     }
 }
