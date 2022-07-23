@@ -82,7 +82,24 @@ public abstract class AbstractCamera extends SubsystemBase {
         return translation;
     }
 
-    public abstract Trajectory getTrajectory();
+    //Returns a trajectory by taking in the position and angle of both the robot and the target
+    public abstract Trajectory getTrajectory(Translation2d start, Translation2d end, double robot_rotation, double target_rotation){
+        
+        //Creating a new instance of a trajectory and giving it a max velocity and acceleration of 3
+        TrajectoryConfig config = new TrajectoryConfing(3,3);
+        
+        //start is the translation of the robot's position
+        Pose2d starting_point = new Pose2d(start,Rotation2d.fromDegrees(robot_rotation));
+        //end is the translation of the target's position
+        Pose2d ending_point = new Pose2d(end,Rotation2d.fromDegrees(target_rotation));
+
+        //Generating the Trajectory
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(starting_point,ending_point,config);
+
+        return trajectory;
+
+
+    }
 
 }
 
