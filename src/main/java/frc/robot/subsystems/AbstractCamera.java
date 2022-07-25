@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public abstract class AbstractCamera extends SubsystemBase {
     protected PhotonCamera camera;
     protected int pipelineIndex;
-    protected double cameraHeight, cameraPitch, targetHeight;
+    protected double cameraHeight;
+    protected double cameraPitch;
+    protected double targetHeight;
     protected Translation2d cameraOffset;
 
     /**
