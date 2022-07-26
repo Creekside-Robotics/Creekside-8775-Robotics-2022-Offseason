@@ -3,7 +3,7 @@ This repository maintains our robot's 2022 offseason code which we are using to 
 
 ## Goals and Improvements over regular season
 This code has had, and will have lots of improvements over our 2022 regular season code.
- - [ ] Move to Command-Based
+ - [x] Move to Command-Based
  - [ ] 20-second automated poistioning and 4-bar climb
  - [ ] Computer vision assisted automated cargo tracking and pickup
  - [ ] Computer vision assisted automated target alignment and shooting
