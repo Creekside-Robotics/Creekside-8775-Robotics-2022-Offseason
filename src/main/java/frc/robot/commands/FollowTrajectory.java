@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -22,7 +23,7 @@ public class FollowTrajectory extends CommandBase {
   public FollowTrajectory(Drivetrain drivetrain, Trajectory trajectory, boolean stopWhenFinished) {
     // Use addRequirements() here to declare subsystem dependencies.
 
-    this.trajectory = trajectory.relativeTo(drivetrain.getPose());
+    this.trajectory = trajectory.transformBy(drivetrain.getPose().minus(new Pose2d()));
 
     this.ramseteCommand = new RamseteCommand(
         this.trajectory,
