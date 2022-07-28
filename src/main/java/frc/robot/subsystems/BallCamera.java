@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import java.util.ArrayList;
 
-import org.photonvision.targeting.PhotonTrackedTarget;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -31,22 +29,23 @@ public abstract class BallCamera extends AbstractCamera {
         } else {
             this.pipelineIndex = 1;
         }
-
-        this.cameraHeight = ballCameraHeight;
-        this.cameraPitch = ballCameraPitch;
-        this.cameraOffset = ballCameraOffset;
-        this.targetHeight = ballTargetHeight;
+        this.camera.setPipelineIndex(this.pipelineIndex);
     }
 
-    public Trajectory getTrajectory() {
+    public Trajectory getTrajectory(double startVelocity) {
         Pose2d initial = new Pose2d(); //origin
 
-        Rotation2d endRotation = new Rotation2d(this.getRelativeTranslation().getX(), this.getRelativeTranslation().getY());
-        Pose2d end = new Pose2d(this.getRelativeTranslation(), endRotation); //translation of ball
+        Translation2d relativeTranslation = this.getRelativeTranslation();
+        if (relativeTranslation == null) {
+            return null;
+        }
+        Rotation2d endRotation = new Rotation2d(relativeTranslation.getX(), relativeTranslation.getY());
+        Pose2d end = new Pose2d(relativeTranslation, endRotation); //translation of ball
 
         ArrayList<Translation2d> interiorWaypoints = new ArrayList<Translation2d>();
  
         TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond, Constants.kMaxAccelerationMetersPerSecondSquared);
+        config.setStartVelocity(startVelocity);
 
         return TrajectoryGenerator.generateTrajectory(initial, interiorWaypoints, end, config);
     };
