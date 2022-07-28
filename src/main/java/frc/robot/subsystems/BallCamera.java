@@ -1,7 +1,17 @@
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+
+import org.photonvision.targeting.PhotonTrackedTarget;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.Constants;
 
 public abstract class BallCamera extends AbstractCamera {
     //placeholder values for now
@@ -27,4 +37,17 @@ public abstract class BallCamera extends AbstractCamera {
         this.cameraOffset = ballCameraOffset;
         this.targetHeight = ballTargetHeight;
     }
+
+    public Trajectory getTrajectory() {
+        Pose2d initial = new Pose2d(); //origin
+
+        Rotation2d endRotation = new Rotation2d(this.getRelativeTranslation().getX(), this.getRelativeTranslation().getY());
+        Pose2d end = new Pose2d(this.getRelativeTranslation(), endRotation); //translation of ball
+
+        ArrayList<Translation2d> interiorWaypoints = new ArrayList<Translation2d>();
+ 
+        TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond, Constants.kMaxAccelerationMetersPerSecondSquared);
+
+        return TrajectoryGenerator.generateTrajectory(initial, interiorWaypoints, end, config);
+    };
 }
