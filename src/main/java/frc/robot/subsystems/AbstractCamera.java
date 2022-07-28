@@ -84,7 +84,7 @@ public abstract class AbstractCamera extends SubsystemBase {
         return translation;
     }
 
-    public abstract Trajectory getTrajectory();
+    public abstract Trajectory getTrajectory(double robotVelocity);
 
 }
 
