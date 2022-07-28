@@ -3,11 +3,12 @@ This repository maintains our robot's 2022 offseason code which we are using to 
 
 ## Goals and Improvements over regular season
 This code has had, and will have lots of improvements over our 2022 regular season code.
- - Move to Command-Based
- - 20-second automated poistioning and 4-bar climb
- - Computer vision assisted automated cargo tracking and pickup
- - Computer vision assisted automated target alignment and shooting
- - 5-ball auto-period
+ - [x] Move to Command-Based
+ - [ ] 20-second automated poistioning and 4-bar climb
+ - [ ] Computer vision assisted automated cargo tracking and pickup
+ - [ ] Computer vision assisted automated target alignment and shooting
+ - [ ] Field-oriented tank-drive
+ - [ ] 5-ball auto-period
 
  ## About the Rapid-React Game
  A few resources explaining more about the FRC rapid react game.
@@ -40,6 +41,8 @@ See something like this?
 DO NOT click that "Resolve Conflicts" button. Unfortunately GitHub makes resolving merge conflicts harder than it needs to
 be, but don't worry! You can follow these steps and get your branch up to date
 quickly.
+
+For a full explanation you can watch [this video](https://www.youtube.com/watch?v=I0hUvy7SW6M). She shows an example and explains the whole process really well.
 
 To do this you will need to run some commands in a terminal. VS Code has one you can access or you can use your system's terminal emulator (Windows Terminal on Windows 10+ or Terminal on OS X).
 
