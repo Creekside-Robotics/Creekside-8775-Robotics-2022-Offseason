@@ -5,20 +5,15 @@ import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.Pigeon2;
-import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.I2C.Port;
 
 // Drivetrain, odometry, and drive commands will be added soon.
 public class Drivetrain extends SubsystemBase {
@@ -30,7 +25,6 @@ public class Drivetrain extends SubsystemBase {
   private final MotorControllerGroup groupleft;
   private final MotorControllerGroup groupright;
   private DifferentialDrive robotDrive;
-  private ColorSensorV3 colorSensor = new ColorSensorV3(Port.kOnboard);
 
   // Automation objects
   private Encoder leftEncoder;
@@ -46,12 +40,12 @@ public class Drivetrain extends SubsystemBase {
     this.groupleft = new MotorControllerGroup(myVictor1, myVictor2);
     this.groupright = new MotorControllerGroup(myVictor3, myVictor4);
     this.groupright.setInverted(true);
-    this.robotDrive = new DifferentialDrive(groupleft, groupright);
+    this.robotDrive = new DifferentialDrive(groupright, groupleft);
 
     this.leftEncoder = new Encoder(Constants.leftEncoder1, Constants.leftEncoder2, false);
     this.leftEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
 
-    this.rightEncoder = new Encoder(Constants.rightEncoder1, Constants.rightEncoder2, true);
+    this.rightEncoder = new Encoder(Constants.rightEncoder1, Constants.rightEncoder2, false);
     this.rightEncoder.setDistancePerPulse(Constants.drivetrainDistancePerPulse);
 
     this.pigeon = new Pigeon2(0);
@@ -66,7 +60,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setMovement(double speed, double turnRate) {
-    this.robotDrive.arcadeDrive(speed, turnRate);
+    this.robotDrive.arcadeDrive(speed, -turnRate);
   }
 
   public Pose2d getPose() {
@@ -92,17 +86,6 @@ public class Drivetrain extends SubsystemBase {
     this.rightEncoder.reset();
     this.pigeon.setYaw(pose.getRotation().getDegrees());
     this.odometry.resetPosition(pose, pose.getRotation());
-  }
-
-  public boolean colorSensorMatchesTeamColor() {
-    var teamColor = DriverStation.getAlliance();
-    if (teamColor == Alliance.Red){
-      return colorSensor.getColor() == Color.kRed;
-    }
-    if (teamColor == Alliance.Blue){
-      return colorSensor.getColor() == Color.kBlue;
-    }
-    return false;
   }
 
   @Override

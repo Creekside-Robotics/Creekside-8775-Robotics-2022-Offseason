@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class RunFlywheel extends CommandBase {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final Shooter shooterSubsystem;
-  private double flywheelVoltage; 
+  private double flywheelSpeed;
 
-  public RunFlywheel(Shooter subsystem, double voltage) {
+  public RunFlywheel(Shooter subsystem, double speed) {
     this.shooterSubsystem = subsystem;
-    this.flywheelVoltage = voltage; 
+    this.flywheelSpeed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.shooterSubsystem);
   }
@@ -24,7 +24,7 @@ public class RunFlywheel extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.shooterSubsystem.setFlywheelVoltage(this.flywheelVoltage); 
+    this.shooterSubsystem.setSpeed(this.flywheelSpeed);
   }
 
   // Called once the command ends or is interrupted.

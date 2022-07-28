@@ -44,7 +44,7 @@ public final class Constants {
     public static int rightEncoder2 = 7;
 
     // Drivetrain Physical Constants
-    public static double drivetrainDistancePerPulse = 0.000233771777; // Based on CAD values, will need to be verified.
+    public static double drivetrainDistancePerPulse = 0.0024;
 
     public static final double ksVolts = 0.22;
     public static final double kvVoltSecondsPerMeter = 1.98;
@@ -67,7 +67,7 @@ public final class Constants {
 
     // Shooting mechanism speed
     public static int defaultShooterSpeed = 0;
-    public static double shootTriggerSpeed = 9;
+    public static double shootTriggerSpeed = 0.7;
 
     // Intake speed
     public static int defaultIntakeSpeed = 0;
@@ -78,7 +78,6 @@ public final class Constants {
     public static String defaultYellowArmPosition = "0";
     public static String defaultTiltArmPosition = "0";
     // Axis' for arms
-
     public static String redArmAxis = "Y";
     public static String yellowArmAxis = "X";
     public static String tiltArmAxis = "Z";
