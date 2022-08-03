@@ -8,6 +8,7 @@ This code has had, and will have lots of improvements over our 2022 regular seas
  - [ ] Computer vision assisted automated cargo tracking and pickup
  - [ ] Computer vision assisted automated target alignment and shooting
  - [ ] Field-oriented tank-drive
+ - [ ] Customizable controls for individual drivers
  - [ ] 5-ball auto-period
 
  ## About the Rapid-React Game
