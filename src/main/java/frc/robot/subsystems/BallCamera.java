@@ -33,20 +33,52 @@ public abstract class BallCamera extends AbstractCamera {
     }
 
     public Trajectory getTrajectory(double startVelocity) {
-        Pose2d initial = new Pose2d(); //origin
-
-        Translation2d relativeTranslation = this.getRelativeTranslation();
-        if (relativeTranslation == null) {
-            return null;
-        }
-        Rotation2d endRotation = new Rotation2d(relativeTranslation.getX(), relativeTranslation.getY());
-        Pose2d end = new Pose2d(relativeTranslation, endRotation); //translation of ball
-
-        ArrayList<Translation2d> interiorWaypoints = new ArrayList<Translation2d>();
- 
-        TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond, Constants.kMaxAccelerationMetersPerSecondSquared);
-        config.setStartVelocity(startVelocity);
-
-        return TrajectoryGenerator.generateTrajectory(initial, interiorWaypoints, end, config);
+        return new BallCameraTrajectory(getRelativeTranslation(), startVelocity).getTrajectory();
     };
+
+    private class BallCameraTrajectory{
+        private Translation2d ballTranslation;
+        private double robotVelocity;
+
+        public BallCameraTrajectory(Translation2d ballTranslation, double robotVelocity) {
+            this.ballTranslation = ballTranslation;
+            this.robotVelocity = robotVelocity;
+        }
+
+        public Trajectory getTrajectory() {
+            if (this.ballTranslation == null) {
+                return null;
+            }
+            Pose2d startPose = getStartPose(); //Robot starts at the orgin
+            ArrayList<Translation2d> interiorWaypoints = getInteriorWaypoints();
+            Pose2d endPose = getEndPose();
+            TrajectoryConfig config = getTrajectoryConfig();
+
+            return TrajectoryGenerator.generateTrajectory(startPose, interiorWaypoints, endPose, config);
+        }
+
+        public Rotation2d getEndRotation() {
+            return new Rotation2d(this.ballTranslation.getX(), this.ballTranslation.getY());
+        }
+
+        public TrajectoryConfig getTrajectoryConfig(){
+            TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond, Constants.kMaxAccelerationMetersPerSecondSquared);
+            config.setStartVelocity(this.robotVelocity);
+            return config;
+        }
+
+        public Pose2d getEndPose() {
+            Rotation2d endRotation = getEndRotation();
+            Translation2d endTranslation = this.ballTranslation;
+            return new Pose2d(endTranslation, endRotation);
+        }
+
+        public Pose2d getStartPose() {
+            return new Pose2d(); //Robot starts at the origin
+        }
+
+        public ArrayList<Translation2d> getInteriorWaypoints(){
+            return new ArrayList<Translation2d>(); //No interior waypoints
+        }
+    }
 }
