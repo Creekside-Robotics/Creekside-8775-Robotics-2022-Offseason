@@ -4,30 +4,50 @@
 
 package frc.robot.commands;
 
+import java.util.ArrayList;
+
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 
 public class MoveToPose extends CommandBase {
   /** Creates a new MoveToPose. */
 
   private Drivetrain drivetrain;
-  private Pose2d pose;
+  private Pose2d endingPose;
+  private Command command;
+  private ArrayList<Translation2d> interiorWaypoints;
+  private double endVelocity;
 
-  public MoveToPose(Drivetrain drivetrain, Pose2d pose) {
+  public MoveToPose(Drivetrain drivetrain, Pose2d endingPose, ArrayList<Translation2d> interiorWaypoints, double endVelocity) {
     this.drivetrain = drivetrain;
-    this.pose = pose;
+    this.endingPose = endingPose;
+    this.interiorWaypoints = interiorWaypoints;
+    this.endVelocity = endVelocity;
     addRequirements(this.drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    var trajectoryToPose = getTrajectoryToPose();
+    this.command = new FollowTrajectory(this.drivetrain, trajectoryToPose, false);
+    this.command.schedule();
+  }
 
   private Trajectory getTrajectoryToPose() {
-    var pose = this.drivetrain.getPose();
-    //This is where we left off, resume here
+    var initial = this.drivetrain.getPose();
+    var config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond, Constants.kMaxAccelerationMetersPerSecondSquared);
+    config.setStartVelocity(Constants.kDriveKinematics.toChassisSpeeds(this.drivetrain.getWheelSpeeds()).vxMetersPerSecond);
+    config.setEndVelocity(this.endVelocity);
+    //more code may be needed later for reversing
+    return TrajectoryGenerator.generateTrajectory(initial, this.interiorWaypoints, this.endingPose, config);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,11 +56,13 @@ public class MoveToPose extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    this.command.cancel();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return this.command.isFinished();
   }
 }
