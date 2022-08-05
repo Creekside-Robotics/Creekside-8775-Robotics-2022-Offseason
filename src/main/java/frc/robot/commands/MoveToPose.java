@@ -47,7 +47,7 @@ public class MoveToPose extends CommandBase {
     config.setStartVelocity(Constants.kDriveKinematics.toChassisSpeeds(this.drivetrain.getWheelSpeeds()).vxMetersPerSecond);
     config.setEndVelocity(this.endVelocity);
     //more code may be needed later for reversing
-    return TrajectoryGenerator.generateTrajectory(initial, this.interiorWaypoints, this.endingPose, config);
+    return TrajectoryGenerator.generateTrajectory(initial, this.interiorWaypoints, this.endingPose, config).relativeTo(initial); //Converting field relative pose to robot relative pose.
   }
 
   // Called every time the scheduler runs while the command is scheduled.
