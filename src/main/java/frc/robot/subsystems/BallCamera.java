@@ -36,7 +36,7 @@ public class BallCamera extends AbstractCamera {
         return new BallCameraTrajectory(getRelativeTranslation(), startVelocity).getTrajectory();
     };
 
-    private class BallCameraTrajectory{
+    public class BallCameraTrajectory{
         private Translation2d ballTranslation;
         private double robotVelocity;
 
