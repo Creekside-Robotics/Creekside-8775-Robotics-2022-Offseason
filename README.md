@@ -7,8 +7,9 @@ This code has had, and will have lots of improvements over our 2022 regular seas
  - [ ] 20-second automated poistioning and 4-bar climb
  - [ ] Computer vision assisted automated cargo tracking and pickup
  - [ ] Computer vision assisted automated target alignment and shooting
- - [ ] Field-oriented tank-drive
+ - [x] Field-oriented tank-drive
  - [ ] Customizable controls for individual drivers
+ - [x] Unit Testing
  - [ ] 5-ball auto-period
 
  ## About the Rapid-React Game
