@@ -11,7 +11,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants;
 
-public abstract class BallCamera extends AbstractCamera {
+public class BallCamera extends AbstractCamera {
     //placeholder values for now
     private static double ballCameraHeight = 1;
     private static double ballCameraPitch = 1;
