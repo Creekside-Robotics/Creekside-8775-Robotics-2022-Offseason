@@ -26,6 +26,7 @@ If you want however, you can develop in any environment that suites you, as long
 Documentation for of the important libraries used in this project.
  - [WPILIB Documentation](https://docs.wpilib.org/en/stable/index.html) - This is the FRC provided control system for our robot. It is very important to understand how it works both software and hardware. Be sure to check out the [Command-Based](https://docs.wpilib.org/en/stable/docs/software/commandbased/index.html) section as that is the system that is used in this project.
  - [PhotonVision](https://docs.photonvision.org/en/latest/) - We use PhotonVision in the project to handle vision processing on our robot.
+ - [JUnit](https://junit.org/junit5/docs/current/user-guide/#overview) - JUnit is the framework that we use to write unit tests in our program.
 
 ## Running Unit Tests
 Unit tests can be run from the command line by using the gradle test task.\
