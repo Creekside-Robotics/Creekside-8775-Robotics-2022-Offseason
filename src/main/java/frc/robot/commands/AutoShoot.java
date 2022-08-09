@@ -12,25 +12,25 @@ import frc.robot.subsystems.Shooter;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class AutoShoot extends CommandBase {
 
   private Drivetrain drivetrain;
   private GoalCamera goalCamera;
-  private double robotVelocity;
-  private Command runIntake;
-  private Command runFlywheel;
+  private Intake intake;
+  private Shooter shooter;
+  private Command shoot;
   private Trajectory finalTrajectory;
 
   public AutoShoot(Drivetrain drivetrain, Intake intake, Shooter shooter, GoalCamera goalcamera, double robotVelocity, FollowTrajectory followTrajectory) {
     //defining classes
     this.drivetrain = drivetrain;
     this.goalCamera = goalcamera;
-    this.robotVelocity = robotVelocity;
-    this.runFlywheel = new RunFlywheel(shooter, Constants.ksVolts);
-    this.runIntake = new RunIntake(intake, Constants.defaultIntakeSpeed);
-
+    this.finalTrajectory = goalCamera.getTrajectory(robotVelocity);
+    this.intake = intake;
+    this.shooter = shooter;
   }
 
 
@@ -38,7 +38,27 @@ public class AutoShoot extends CommandBase {
   @Override
   public void initialize() {
     if (finalTrajectory != null){
-      this.schedule();
+      new FollowTrajectory(drivetrain, finalTrajectory, isFinished());
+
+      //keeps the drivetrain from moving
+      drivetrain.setMovement(0.0, 0.0);
+
+      //creates runFlywheel and runIntake commands so that they can be used in timedCommand
+      Command runFlywheel = new RunFlywheel(shooter, Constants.ksVolts);
+      Command runIntake =  new RunIntake(this.intake, Constants.defaultIntakeSpeed);
+
+      Command firstIntake = new TimedCommand(runIntake, 0.5); //Moves intake down for half a second
+
+      Command firstFlywheel = new TimedCommand(runFlywheel, 2.0); //Runs flywheel for 2 seconds 
+      
+      //Runs both the flywheel and the intake for 2 seconds
+      Command simultaneous = new TimedCommand(new ParallelCommandGroup(runIntake,runFlywheel), 2.0);
+
+      //Running everything in a sequential command group
+
+      this.shoot = new SequentialCommandGroup(firstIntake, firstFlywheel, simultaneous);
+      
+      this.shoot.schedule();
     }
 
   
@@ -47,26 +67,13 @@ public class AutoShoot extends CommandBase {
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  public void execute() {
-    new FollowTrajectory(drivetrain, finalTrajectory, isFinished());
-    //keeps the drivetrain from moving
-    drivetrain.setMovement(0.0, 0.0);
-    new TimedCommand(runIntake, 0.5); //Moves intake down for half a second
-    new TimedCommand(runFlywheel, 2.0); //Runs flywheel for 2 seconds 
-    //Runs both the flywheel and the intake for 2 seconds
-    new TimedCommand(new SequentialCommandGroup(runIntake,runFlywheel), 2.0);
-
-
-
-
-    
+  public void execute() {    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    Trajectory finalTrajectory = goalCamera.getTrajectory(robotVelocity);
-    if (finalTrajectory == null){
+    if (this.shoot == null || this.finalTrajectory == null){
       return true;
     }
     else{
