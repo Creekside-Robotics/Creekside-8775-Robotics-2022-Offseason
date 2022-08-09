@@ -30,9 +30,6 @@ public class AutoPickup extends CommandBase {
     this.driveTrain = driveTrain;
     this.intake = intake;
     this.camera = camera;
-
-    this.trajectory = null;
-    this.commandGroup = null;
   }
 
   // Called when the command is initially scheduled.
@@ -57,10 +54,7 @@ public class AutoPickup extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (this.trajectory == null || this.commandGroup == null) {
-      return true;
-    }
-    return this.commandGroup.isFinished();
+    return this.trajectory == null || this.commandGroup == null || this.commandGroup.isFinished();
   }
 
   // Called once the command ends or is interrupted.
