@@ -29,4 +29,14 @@ public class BallTrajectoryTest {
         var actualEndPose = new BallCamera().new BallCameraTrajectory(ballTranslation, 0).getEndPose();
         assertEquals(expectedEndPose, actualEndPose);
     }
+
+    @Test
+    public void testVelocity() {
+        var expectedVelocity = 2;
+        var ballTranslation = new Translation2d(10, 0);
+        var trajectoryToBall = new BallCamera().new BallCameraTrajectory(ballTranslation, expectedVelocity).getTrajectory();
+        System.out.println(trajectoryToBall.getStates().toString());
+        var actualStartingVelocity = trajectoryToBall.getStates().get(0).velocityMetersPerSecond;
+        assertEquals(expectedVelocity, actualStartingVelocity);
+    }
 }
