@@ -80,12 +80,8 @@ public class AutoShoot extends CommandBase {
     double robotVelocity =  Constants.kDriveKinematics.toChassisSpeeds(this.drivetrain.getWheelSpeeds()).vxMetersPerSecond;
     Trajectory finalTrajectory = this.goalCamera.getTrajectory(robotVelocity);
 
-    if (this.shoot == null || finalTrajectory == null){
-      return true;
-    }
-    else{
-      return false;
-    }
+    return this.shoot == null || finalTrajectory == null;
+  
   }
 
   // Called once after isFinished returns true
