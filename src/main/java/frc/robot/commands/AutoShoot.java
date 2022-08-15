@@ -22,6 +22,7 @@ public class AutoShoot extends CommandBase {
   private Intake intake;
   private Shooter shooter;
   private Command shoot;
+  private Trajectory finalTrajectory;
 
   public AutoShoot(Drivetrain drivetrain, Intake intake, Shooter shooter, GoalCamera goalcamera) {
     //defining classes
@@ -37,7 +38,7 @@ public class AutoShoot extends CommandBase {
   public void initialize() {
 
     double robotVelocity =  Constants.kDriveKinematics.toChassisSpeeds(this.drivetrain.getWheelSpeeds()).vxMetersPerSecond;
-    Trajectory finalTrajectory = this.goalCamera.getTrajectory(robotVelocity);
+    this.finalTrajectory = this.goalCamera.getTrajectory(robotVelocity);
 
     if (finalTrajectory != null){
 
@@ -50,7 +51,7 @@ public class AutoShoot extends CommandBase {
       Command runFlywheel = new RunFlywheel(shooter, Constants.ksVolts);
       Command runIntake =  new RunIntake(this.intake, Constants.defaultIntakeSpeed);
 
-      Command firstIntake = new ParallelCommandGroup(new TimedCommand(runIntake, 0.5), lock); //Moves intake down for half a second while locking drivetrain
+      Command firstIntake = new ParallelCommandGroup(new TimedCommand(runIntake, -0.5), lock); //Moves intake down for half a second while locking drivetrain
 
       Command firstFlywheel = new ParallelCommandGroup(new TimedCommand(runFlywheel, 2.0), lock); //Runs flywheel for 2 seconds while locking drivetrain
       
@@ -77,10 +78,8 @@ public class AutoShoot extends CommandBase {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    double robotVelocity =  Constants.kDriveKinematics.toChassisSpeeds(this.drivetrain.getWheelSpeeds()).vxMetersPerSecond;
-    Trajectory finalTrajectory = this.goalCamera.getTrajectory(robotVelocity);
 
-    return this.shoot == null || finalTrajectory == null;
+    return this.shoot == null || this.finalTrajectory == null || this.shoot.isFinished();
   
   }
 
