@@ -49,9 +49,9 @@ public class AutoShoot extends CommandBase {
 
       //creates runFlywheel and runIntake commands so that they can be used in timedCommand
       Command runFlywheel = new RunFlywheel(shooter, Constants.ksVolts);
-      Command runIntake =  new RunIntake(this.intake, Constants.defaultIntakeSpeed);
+      Command runIntake =  new RunIntake(this.intake, -Constants.defaultIntakeSpeed);
 
-      Command firstIntake = new ParallelCommandGroup(new TimedCommand(runIntake, -0.5), lock); //Moves intake down for half a second while locking drivetrain
+      Command firstIntake = new ParallelCommandGroup(new TimedCommand(runIntake, 0.5), lock); //Moves intake down for half a second while locking drivetrain
 
       Command firstFlywheel = new ParallelCommandGroup(new TimedCommand(runFlywheel, 2.0), lock); //Runs flywheel for 2 seconds while locking drivetrain
       
@@ -86,7 +86,11 @@ public class AutoShoot extends CommandBase {
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
-    this.shoot.cancel();
+    if (this.shoot != null){
+      this.shoot.cancel();
+
+    }
+    
   }
 
 
