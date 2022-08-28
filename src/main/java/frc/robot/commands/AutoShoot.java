@@ -13,6 +13,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class AutoShoot extends CommandBase {
@@ -47,28 +48,15 @@ public class AutoShoot extends CommandBase {
       //keeps the drivetrain from moving
       Command lock = new SetDriveMovement(drivetrain, 0.0, 0.0);
 
-      //creates runFlywheel and runIntake commands so that they can be used in timedCommand
-      Command runFlywheel = new RunFlywheel(shooter, Constants.ksVolts);
-      Command runIntakeIn =  new RunIntake(this.intake, -Constants.defaultIntakeSpeed);
-      Command runIntakeOut = new RunIntake(this.intake, Constants.defaultIntakeSpeed);
-
-      Command firstIntake = new ParallelCommandGroup(new TimedCommand(runIntakeIn, 0.5), lock); //Moves intake down for half a second while locking drivetrain
-
-      Command firstFlywheel = new ParallelCommandGroup(new TimedCommand(runFlywheel, 2.0), lock); //Runs flywheel for 2 seconds while locking drivetrain
-      
-      //Runs both the flywheel and the intake for 2 seconds while locking down the drivetrain
-      Command simultaneous = new TimedCommand(new ParallelCommandGroup(runIntakeOut,runFlywheel,lock), 2.0);
+      Command lockedWhileShooting = new ParallelDeadlineGroup(new ManualShoot(this.shooter, this.intake), lock);
 
 
       //Running everything in a sequential command group
 
-      this.shoot = new SequentialCommandGroup(follow, firstIntake, firstFlywheel, simultaneous);
+      this.shoot = new SequentialCommandGroup(follow, lockedWhileShooting);
       
       this.shoot.schedule();
-    }
-
-  
-    
+    }  
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -79,9 +67,7 @@ public class AutoShoot extends CommandBase {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-
     return this.shoot == null || this.finalTrajectory == null || this.shoot.isFinished();
-  
   }
 
   // Called once after isFinished returns true
@@ -89,11 +75,7 @@ public class AutoShoot extends CommandBase {
   public void end(boolean interrupted) {
     if (this.shoot != null){
       this.shoot.cancel();
-
     }
     
   }
-
-
 }
-
