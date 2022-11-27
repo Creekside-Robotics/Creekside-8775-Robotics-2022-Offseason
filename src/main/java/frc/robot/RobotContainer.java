@@ -30,7 +30,7 @@ import frc.robot.subsystems.*;
  * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainer {  
+public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // Joysticks
@@ -63,18 +63,15 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    //Declaring instances of commands
+    Object exampleCommand = null;
+    Object exampleCommand2 = null;
+    // A chooser for autonomous commands
+    this.m_chooser = new SendableChooser<>();
+    this.m_chooser.setDefaultOption( "Example Command 1", exampleCommand);
+    this.m_chooser.addOption("Example Command 2", exampleCommand2);
+    SmartDashboard.putData(m_chooser);
     // Configure the button bindings
-      //Declaring instances of commands
-  Object exampleCommand = null;
-  Object exampleCommand2 = null;
-  // A chooser for autonomous commands
-  this.m_chooser = new SendableChooser<>();
-
-  this.m_chooser.setDefaultOption( "Example Command 1", exampleCommand);
-
-  this.m_chooser.addOption("Example Command 2", exampleCommand2);
-
-  SmartDashboard.putData(m_chooser);
     configureButtonBindings();
   }
 
@@ -113,14 +110,13 @@ public class RobotContainer {
     fourBarClimb.whenHeld(new ClimbRoutine(redArm, yellowArm, tiltArm));
   }
 
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-  public Object getAutonomousCommand() {
+  public Command getAutonomousCommand() {
     // Autonomous command is yet to be developed
-    return m_chooser.getSelected();
+    return (Command) m_chooser.getSelected();
   }
 }
