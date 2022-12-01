@@ -6,9 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoCalibrateArm;
 import frc.robot.commands.CalibrateArm;
 import frc.robot.commands.ClimbRoutine;
 import frc.robot.commands.ManualDrive;
@@ -54,11 +57,20 @@ public class RobotContainer {
   ArmComponent redArm = new SIMArm(Constants.redArmId, false, true, Constants.redRevInRan, 1, 0, "R");
   ArmComponent yellowArm = new SIMArm(Constants.yellowArmId, false, false, Constants.yellowRevInRan, 2, 3, "Y");
   ArmComponent tiltArm = new NeoArm(Constants.tiltId, true, Constants.tiltRevInRan, "T");
+  private SendableChooser m_chooser;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    //Declaring instances of commands
+    Object exampleCommand = null;
+    Object exampleCommand2 = null;
+    // A chooser for autonomous commands
+    this.m_chooser = new SendableChooser<>();
+    this.m_chooser.setDefaultOption( "Example Command 1", exampleCommand);
+    this.m_chooser.addOption("Example Command 2", exampleCommand2);
+    SmartDashboard.putData(m_chooser);
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -105,6 +117,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // Autonomous command is yet to be developed
-    return null;
+    return (Command) m_chooser.getSelected();
   }
 }
