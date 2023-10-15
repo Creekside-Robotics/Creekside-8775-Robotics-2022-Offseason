@@ -24,6 +24,9 @@ public final class Main {
    * If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
+    // chenyu second commit 
+    int x = 0;
+    System.out.println("x = " + x);
     RobotBase.startRobot(Robot::new);
   }
 }
